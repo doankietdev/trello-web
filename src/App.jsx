@@ -1,11 +1,11 @@
 import Button from '@mui/material/Button'
-import ModeToggle from './ModeToggle'
+import ModeSelect from './ModeSelect'
 
 function App() {
 
   return (
     <>
-      <ModeToggle />
+      <ModeSelect />
       <p>Doan Anh Kiet</p>
      <Button variant="contained">Hello world</Button>
     </>
