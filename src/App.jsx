@@ -7,7 +7,7 @@ function App() {
     <>
       <ModeSelect />
       <p>Doan Anh Kiet</p>
-     <Button variant="contained">Hello world</Button>
+      <Button variant="contained">Hello world</Button>
     </>
   )
 }
