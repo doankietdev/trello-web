@@ -15,6 +15,7 @@ import Recent from './Menus/Recent'
 import Starred from './Menus/Starred'
 import Templates from './Menus/Templates'
 import Profile from './Menus/Profile'
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 
 function AppBar() {
   return (
@@ -25,6 +26,7 @@ function AppBar() {
       alignItems: 'center',
       justifyContent: 'space-between',
       gap: 2,
+      paddingX: 2,
       overflowX: 'auto'
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -45,7 +47,7 @@ function AppBar() {
           <Recent />
           <Starred />
           <Templates />
-          <Button variant="outlined">Create</Button>
+          <Button variant="outlined" startIcon={<AddToPhotosIcon />}>Create</Button>
         </Box>
       </Box>
 
