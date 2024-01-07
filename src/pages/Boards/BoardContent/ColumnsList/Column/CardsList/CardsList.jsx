@@ -1,7 +1,10 @@
 import Box from '@mui/material/Box'
 import Card from './Card/Card'
+import { mapOrder } from '~/utils/sorts'
 
-function CardsList() {
+function CardsList({ cards, cardOrderIds }) {
+  const orderedCards = mapOrder(cards, cardOrderIds, '_id')
+
   return (
     <Box
       sx={{
@@ -21,9 +24,7 @@ function CardsList() {
         '&::-webkit-scrollbar-thumb:hover': { background: '#bfc2cf' }
       }}
     >
-      <Card />
-      <Card tempHideMedia />
-      <Card tempHideMedia tempHideAction />
+      {orderedCards?.map(card => <Card key={card._id} card={card} />)}
     </Box>
   )
 }
