@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import ComlumnsList from './ColumnsList/ComlumnsList'
 
-function BoardContent() {
+function BoardContent({ board }) {
   return (
     <Box
       sx={{
@@ -12,7 +12,7 @@ function BoardContent() {
         p: '10px 0'
       }}
     >
-      <ComlumnsList />
+      <ComlumnsList columns={board?.columns} columnOrderIds={board?.columnOrderIds} />
     </Box>
   )
 }

@@ -2,8 +2,11 @@ import Box from '@mui/material/Box'
 import Column from './Column/Column'
 import Button from '@mui/material/Button'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
+import { mapOrder } from '~/utils/sorts'
 
-function ComlumnsList() {
+function ComlumnsList({ columns, columnOrderIds }) {
+  const orderedColumns = mapOrder(columns, columnOrderIds, '_id')
+
   return (
     <Box sx={{
       bgcolor: 'inherit',
@@ -13,9 +16,7 @@ function ComlumnsList() {
       overflowX: 'auto',
       '&::-webkit-scrollbar-track': { m: '10px' }
     }}>
-      <Column />
-      <Column />
-      <Column />
+      {orderedColumns?.map(column => <Column key={column._id} column={column} />)}
 
       <Box
         sx={{

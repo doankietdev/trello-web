@@ -17,7 +17,7 @@ import Button from '@mui/material/Button'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import CardsList from './CardsList/CardsList'
 
-function Column() {
+function Column({ column }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -59,7 +59,7 @@ function Column() {
             cursor: 'pointer'
           }}
         >
-          Column Title
+          {column?.title}
         </Typography>
         <Box>
           <Tooltip title="More options">
@@ -117,7 +117,7 @@ function Column() {
       </Box>
 
       {/*Card list*/}
-      <CardsList />
+      <CardsList cards={column?.cards} cardOrderIds={column?.cardOrderIds} />
 
       {/* Box column footer */}
       <Box
