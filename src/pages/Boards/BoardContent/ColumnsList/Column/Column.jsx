@@ -17,8 +17,8 @@ import Button from '@mui/material/Button'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-
 import CardsList from './CardsList/CardsList'
+import { mapOrder } from '~/utils/sorts'
 
 function Column({ column }) {
   const {
@@ -41,6 +41,9 @@ function Column({ column }) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const { cards, cardOrderIds } = column
+  const orderedCards = mapOrder(cards, cardOrderIds, '_id')
 
   return (
     <Box
@@ -136,7 +139,7 @@ function Column({ column }) {
       </Box>
 
       {/*Card list*/}
-      <CardsList cards={column?.cards} cardOrderIds={column?.cardOrderIds} />
+      <CardsList cards={orderedCards} />
 
       {/* Box column footer */}
       <Box
