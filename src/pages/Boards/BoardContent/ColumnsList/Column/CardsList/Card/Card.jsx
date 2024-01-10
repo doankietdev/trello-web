@@ -22,7 +22,8 @@ function Card({ card }) {
   const dndCardStyles = {
     transform: CSS.Translate.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : undefined
+    opacity: isDragging ? 0.5 : undefined,
+    border: isDragging ? '2px solid #2ecc71' : undefined
   }
 
   const shouldShowCardActions = !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
