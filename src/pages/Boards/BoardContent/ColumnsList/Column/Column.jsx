@@ -32,7 +32,8 @@ function Column({ column }) {
   const dndColumnStyles = {
     transform: CSS.Translate.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : undefined
+    opacity: isDragging ? 0.5 : undefined,
+    height: '100%'
   }
 
   const [anchorEl, setAnchorEl] = useState(null)
