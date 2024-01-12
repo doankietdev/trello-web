@@ -43,7 +43,6 @@ function BoardContent({ board }) {
   })
   const sensors = useSensors(mouseSensor, touchSensor)
 
-  const [activeDragItemId, setActiveDragItemId] = useState(null)
   const [activeDragItemType, setActiveDragItemType] = useState(null)
   const [activeDragItemData, setActiveDragItemData] = useState(null)
   const [oldColumn, setOldColumn] = useState(null)
@@ -92,7 +91,6 @@ function BoardContent({ board }) {
   const handleDragStart = (event) => {
     const isCard = event?.active?.data?.current?.columnId
     const activeCardId = event?.active?.id
-    setActiveDragItemId(activeCardId)
     setActiveDragItemType(
       isCard ? activeDragItemTypes.card : activeDragItemTypes.column
     )
@@ -189,7 +187,6 @@ function BoardContent({ board }) {
       })
     }
 
-    setActiveDragItemId(null)
     setActiveDragItemType(null)
     setActiveDragItemData(null)
   }
