@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
 import Box from '@mui/material/Box'
 import AppsIcon from '@mui/icons-material/Apps'
 import SvgIcon from '@mui/material/SvgIcon'
@@ -122,7 +122,7 @@ function AppBar() {
         </Tooltip>
 
         <Tooltip title="Profile" color="primary">
-          <Profile sx={{ cursor: 'pointer' }} />
+          <Profile />
         </Tooltip>
       </Box>
     </Box>

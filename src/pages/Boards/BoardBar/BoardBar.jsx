@@ -120,10 +120,10 @@ function BoardBar({ board }) {
             <Avatar alt="Doan Anh Kiet" src="https://avatars.githubusercontent.com/u/89434076?v=4" />
           </Tooltip>
           <Tooltip title="Doan Anh Kiet">
-            <Avatar alt="Doan Anh Kiet" src="https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/410419631_1843406726062657_2567995363253550615_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=efb6e6&_nc_eui2=AeHIaZjm1mYGIAh9KDyqBSReSVRXzXQ4ucBJVFfNdDi5wDiZmt7IUsQDwgz1xmSSFQFksyI-F5GUtoY98abF1g6M&_nc_ohc=PHpEGcTOyZYAX84dJ8w&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAZ5DyflMwnfU8cJJuCx9NP_DqS7pK60bTJC5xgQOjSUg&oe=659C1CBB" />
+            <Avatar alt="Doan Anh Kiet" src="https://scontent.fsgn13-3.fna.fbcdn.net/v/t1.6435-9/37086496_520383038365039_7924600177384488960_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd63ad&_nc_eui2=AeHfSYI9PJqXrocbIFqxa9x5MT3jLhNK2tgxPeMuE0ra2PPh0GuXzTWSCN6oRS_DybqzJye5ra7v1vyeiC1h6Wut&_nc_ohc=FxyW2Cqj45kAX-3c9jm&_nc_ht=scontent.fsgn13-3.fna&oh=00_AfDobK9fzFpgmCZCqSB1HzK6aQwx3w8Zk3sjyOi5lGuSbA&oe=65C8ECA2" />
           </Tooltip>
           <Tooltip title="Doan Anh Kiet">
-            <Avatar alt="Doan Anh Kiet" src="https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/278216457_1439232079813459_9083539604491249204_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd5e9f&_nc_eui2=AeFo3Xzmvv4k6Tyh6FItMsFeWenivSPLdh9Z6eK9I8t2H9idGV0a92lH5KbFIgqdW9SAAyh2-p2vXrQ-s_HNkFt3&_nc_ohc=KN1_UrL7J18AX-Z7uzI&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfC7zC1Ar240N3aZcUhY2exF8pnCReyUsBWrF_yB5-r9Ww&oe=659C11F6" />
+            <Avatar alt="Doan Anh Kiet" src="https://scontent.fsgn13-3.fna.fbcdn.net/v/t1.6435-9/50285524_637593503310658_6768280370098995200_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=dd63ad&_nc_eui2=AeGgg3pfOvgJH_sQZMY8CSpFp8m2v0qccjCnyba_SpxyMOuSUDETuw7M61gvT_uJXvhUmbggNP0WPalYjooHQ_4r&_nc_ohc=Zxbe1G1uG8oAX89mFi4&_nc_ht=scontent.fsgn13-3.fna&oh=00_AfDDGzjTvqnAxQzEXGWCD9q2Sc9Wg-KQy12BYBDx_J_1SA&oe=65C9069E" />
           </Tooltip>
         </AvatarGroup>
       </Box>
