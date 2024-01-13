@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import Button from '@mui/material/Button'
+import { useState, forwardRef } from 'react'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Divider from '@mui/material/Divider'
@@ -77,4 +76,5 @@ function Profile() {
   )
 }
 
-export default Profile
+const ForwaredProfile = forwardRef(Profile)
+export default ForwaredProfile

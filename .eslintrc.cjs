@@ -45,6 +45,7 @@ module.exports = {
     'comma-dangle': 1,
     'comma-spacing': 1,
     'arrow-spacing': 1,
-    'eol-last': ['warn', 'always']
+    'eol-last': ['warn', 'always'],
+    'no-extra-boolean-cast': 0
   }
 }
