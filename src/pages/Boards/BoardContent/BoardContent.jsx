@@ -18,6 +18,7 @@ import ColumnsList from './ColumnsList/ColumnsList'
 import { mapOrder } from '~/utils/sorts'
 import Column from './ColumnsList/Column/Column'
 import Card from './ColumnsList/Column/CardsList/Card/Card'
+import { generatePlaceholderCard } from '~/utils/formatter'
 
 const activeDragItemTypes = {
   column: 'column',
@@ -78,14 +79,23 @@ function BoardContent({ board }) {
 
       if (nextActiveColumn) {
         nextActiveColumn.cards = activeColumn?.cards?.filter(card => card?._id !== activeDraggingCardId)
+
+        if (!nextActiveColumn.cards?.length) {
+          nextActiveColumn.cards = [generatePlaceholderCard(board?._id, activeColumn?._id)]
+        }
+
         nextActiveColumn.cardOrderIds = activeColumn?.cards?.map(card => card?._id)
       }
       if (nextOverColumn) {
-        // nextOverColumn.cards = nextOverColumn?.cards?.filter(card => card?._id !== activeDraggingCardId)
+        nextOverColumn.cards = nextOverColumn?.cards?.filter(card =>
+          card?._id !== activeDraggingCardId &&
+          !card?.FE_PlaceholderCard // condition to fix bug dndKit drag card when empty column
+        )
         nextOverColumn.cards = nextOverColumn?.cards?.toSpliced(newCardIndex, 0, {
           ...activeDraggingCard,
           columnId: nextOverColumn._id
         })
+
         nextOverColumn.cardOrderIds = nextOverColumn?.cards?.map(card => card?._id)
       }
       return nextColumns
@@ -138,7 +148,7 @@ function BoardContent({ board }) {
     }
     const { active, over } = event
 
-    if (!active && !over ) return
+    if (!active || !over ) return
 
     const {
       id: activeDraggingCardId, data: { current: activeDraggingCard }
