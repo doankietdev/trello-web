@@ -26,7 +26,8 @@ const activeDragItemTypes = {
 }
 
 function BoardContent({ board }) {
-  const { columns, columnOrderIds } = board
+  const { columns, columnOrderIds } = board || {}
+
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
       styles: { active: { opacity: '0.5' }
