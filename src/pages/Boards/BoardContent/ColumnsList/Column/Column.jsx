@@ -56,7 +56,7 @@ function Column({ column }) {
           maxWidth: '300px',
           bgcolor: (theme) =>
             theme.palette.mode === 'dark' ? '#333543' : '#ebecf0',
-          ml: 2,
+          mx: 1,
           borderRadius: '6px',
           height: 'fit-content',
           maxHeight: (theme) =>

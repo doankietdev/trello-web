@@ -18,14 +18,14 @@ const theme = extendTheme({
   colorSchemes: {
     // light: {
     //   palette: {
-    //     primary: teal,
-    //     secondary: deepOrange
+    //     primary: '#08479E',
+    //     secondary: '#084192'
     //   }
     // },
     // dark: {
     //   palette: {
-    //     primary: cyan,
-    //     secondary: orange
+    //     primary: '#073370',
+    //     secondary: '#101204'
     //   }
     // }
   },
