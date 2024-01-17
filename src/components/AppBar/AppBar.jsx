@@ -25,103 +25,131 @@ function AppBar() {
   const [searchValue, setSearchValue] = useState('')
 
   return (
-    <Box px={2} sx={{
-      width: '100%',
-      height: (theme) => theme.trello.appBarHeight,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      gap: 2,
-      paddingX: 2,
-      overflowX: 'auto',
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0'),
-      '&::-webkit-scrollbar-track': { m: '10px' }
-    }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <AppsIcon sx={{ color: 'white', cursor: 'pointer' }} />
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, cursor: 'pointer' }} >
-          <SvgIcon component={trelloIcon} fontSize="small" inheritViewBox sx={{ color: 'white' }}/>
-          <Typography variant="span" sx={{
-            fontSize: '1.2rem',
-            fontWeight: 'bold',
-            color: 'white'
-          }}>
+    <Box
+      sx={{
+        width: '100%',
+        height: (theme) => theme.trello.appBarHeight,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 2,
+        px: 2,
+        overflowX: 'auto',
+        bgcolor: 'primary.main',
+        '&::-webkit-scrollbar-track': { m: '10px' }
+      }}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Button sx={{ color: 'text.secondary', px: 2, maxWidth: '40px', minWidth: '40px' }}>
+          <AppsIcon />
+        </Button>
+        <Button
+          startIcon={
+            <SvgIcon
+              component={trelloIcon}
+              fontSize="small"
+              inheritViewBox
+              sx={{ color: 'text.secondary' }}
+            />
+          }
+          sx={{ px: 2 }}
+        >
+          <Typography
+            variant="span"
+            sx={{
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+              color: 'text.secondary'
+            }}
+          >
             Trello
           </Typography>
-        </Box>
+        </Button>
 
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2 }}>
           <Workspaces />
           <Recent />
           <Starred />
           <Templates />
-          <Button
-            sx={{
-              color: 'white',
-              borderColor: 'white',
-              '&:hover': {
-                borderColor: 'white'
-              }
-            }}
-            variant="outlined"
-            startIcon={<AddToPhotosIcon />}
-          >
+          <Button variant="outlined" startIcon={<AddToPhotosIcon />}>
             Create
           </Button>
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }} >
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <TextField
           id="outlined-search"
           label="Search"
           type="text"
           size="small"
+          variant="outlined"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon sx={{ color: 'white' }} />
+                <SearchIcon />
               </InputAdornment>
             ),
             endAdornment: searchValue ? (
               <InputAdornment>
-                <CloseIcon
-                  position="start"
-                  fontSize="small"
-                  sx={{ color: 'white', cursor: 'pointer' }}
+                <Button
                   onClick={() => setSearchValue('')}
-                />
+                  sx={{
+                    minWidth: '36px',
+                    maxWidth: '36px',
+                    bgcolor: 'transparent',
+                    '&:hover': {
+                      bgcolor: 'transparent'
+                    }
+                  }}
+                >
+                  <CloseIcon
+                    position="start"
+                    fontSize="small"
+                    sx={{
+                      color: (theme) =>
+                        `${theme.palette.text.primary} !important`
+                    }}
+                  />
+                </Button>
               </InputAdornment>
             ) : null
           }}
           sx={{
-            minWidth: '120px',
-            maxWidth: '170px',
-            '& label': { color: 'white' },
-            '& input': { color: 'white' },
-            '& label.Mui-focused': { color: 'white' },
+            '& label': { color: 'text.secondary' },
+            '& input': { color: 'text.secondary' },
+            '& .MuiSvgIcon-root': {
+              color: (theme) => `${theme.palette.text.secondary} !important`
+            },
+            '& label.Mui-focused': { color: 'text.secondary' },
             '& .MuiOutlinedInput-root': {
-              '& fieldset': { borderColor: 'white' },
-              '&:hover fieldset': { borderColor: 'white' },
-              '&.Mui-focused fieldset': { borderColor: 'white' }
+              pr: 0.3,
+              '& fieldset': { borderColor: 'text.secondary' },
+              '&:hover fieldset': { borderColor: 'text.secondary' },
+              '&.Mui-focused fieldset': {
+                borderColor: (theme) =>
+                  `${theme.palette.text.secondary} !important`
+              }
             }
           }}
         />
         <ModeSelect />
 
-        <Tooltip title="Notifications" color="primary">
-          <Badge color="warning" badgeContent={3} sx={{ cursor: 'pointer' }} >
-            <NotificationsNoneIcon sx={{ color: 'white' }} />
+        <Tooltip title="Notifications">
+          <Badge color="secondary" badgeContent={3} sx={{ cursor: 'pointer' }}>
+            <NotificationsNoneIcon sx={{ color: 'text.secondary' }} />
           </Badge>
         </Tooltip>
 
-        <Tooltip title="Help" color="primary">
-          <HelpOutlineIcon sx={{ cursor: 'pointer', color: 'white' }} />
+        <Tooltip title="Help">
+          <HelpOutlineIcon
+            sx={{ cursor: 'pointer', color: 'text.secondary' }}
+          />
         </Tooltip>
 
-        <Tooltip title="Profile" color="primary">
+        <Tooltip title="Profile">
           <Profile />
         </Tooltip>
       </Box>

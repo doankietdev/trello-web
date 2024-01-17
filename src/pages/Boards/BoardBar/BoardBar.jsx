@@ -13,19 +13,11 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { capitalizeFirstLetter } from '~/utils/formatter'
 
 const menuStyles = {
-  color: 'white',
-  bgcolor: '',
-  border: 'none',
+  color: 'text.secondary',
+  background: 'none',
   borderRadius: '8px',
-  '& .MuiSvgIcon-root': {
-    color: 'white'
-  },
-  '&.MuiChip-clickable:hover': {
-    bgcolor: 'primary.dark'
-  },
-  '&:active': {
-    boxShadow: 'none'
-  }
+  '& .MuiSvgIcon-root': { color: 'text.secondary' },
+  '&.MuiChip-clickable:hover': { bgcolor: 'primary.light' }
 }
 
 function BoardBar({ board }) {
@@ -39,15 +31,13 @@ function BoardBar({ board }) {
       gap: 2,
       paddingX: 2,
       overflowX: 'auto',
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
-      borderBottom: '1px solid white',
+      bgcolor: 'primary.dark',
       '&::-webkit-scrollbar-track': { m: '10px' }
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Chip
           icon={<DashboardIcon />}
           label={board?.title}
-          variant="outlined"
           clickable
           sx={menuStyles}
         />
@@ -55,7 +45,6 @@ function BoardBar({ board }) {
         <Chip
           icon={<VpnLockIcon />}
           label={capitalizeFirstLetter(board?.type)}
-          variant="outlined"
           clickable
           sx={menuStyles}
         />
@@ -63,7 +52,6 @@ function BoardBar({ board }) {
         <Chip
           icon={<AddToDriveIcon />}
           label="Add to Google Drive"
-          variant="outlined"
           clickable
           sx={menuStyles}
         />
@@ -71,7 +59,6 @@ function BoardBar({ board }) {
         <Chip
           icon={<BoltIcon />}
           label="Automation"
-          variant="outlined"
           clickable
           sx={menuStyles}
         />
@@ -79,27 +66,13 @@ function BoardBar({ board }) {
         <Chip
           icon={<FilterListIcon />}
           label="Filters"
-          variant="outlined"
           clickable
           sx={menuStyles}
         />
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <Button
-          variant="outlined"
-          startIcon={<PersonAddIcon />}
-          sx={{
-            color: 'white',
-            borderColor: 'white',
-            '&:hover': {
-              borderColor: 'white'
-            }
-          }}
-        >
-          Invite
-        </Button>
-
+        <Button variant="outlined" startIcon={<PersonAddIcon />}>Invite</Button>
         <AvatarGroup
           max={4}
           total={5}
@@ -110,9 +83,9 @@ function BoardBar({ board }) {
               height: 34,
               fontSize: '1rem',
               border: 'none',
-              color: 'white',
+              color: 'text.secondary',
               cursor: 'pointer',
-              '&:first-of-type': { bgcolor: '#a4b0de' }
+              '&:first-of-type': { bgcolor: 'primary.light' }
             }
           }}
         >

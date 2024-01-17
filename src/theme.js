@@ -16,18 +16,45 @@ const theme = extendTheme({
     columnFooterHeight: COLUMN_FOOTER_HEIGHT
   },
   colorSchemes: {
-    // light: {
-    //   palette: {
-    //     primary: '#08479E',
-    //     secondary: '#084192'
-    //   }
-    // },
-    // dark: {
-    //   palette: {
-    //     primary: '#073370',
-    //     secondary: '#101204'
-    //   }
-    // }
+    light: {
+      palette: {
+        primary: {
+          main: '#0B4DA9'
+        },
+        secondary: {
+          main: '#f50057'
+        },
+        text: {
+          secondary: '#FFFFFF'
+        },
+        background: {
+          default: '#F1F2F4',
+          paper: '#FFFFFF'
+        },
+        hoverBgcolor: {
+          secondary: '#00000026'
+        }
+      }
+    },
+    dark: {
+      palette: {
+        primary: {
+          main: '#2c3e50'
+        },
+        secondary: {
+          main: '#f50057'
+        },
+        text: {
+          secondary: '#FFFFFF'
+        },
+        background: {
+          default: '#111111'
+        },
+        hoverBgcolor: {
+          secondary: '#FFFFFF26'
+        }
+      }
+    }
   },
   components: {
     MuiCssBaseline: {
@@ -38,7 +65,7 @@ const theme = extendTheme({
             height: '8px'
           },
           '*::-webkit-scrollbar-thumb': {
-            background: '#dcdde1',
+            background: '#bdc3c7',
             borderRadius: '8px'
           },
           '*::-webkit-scrollbar-thumb:hover': {
@@ -49,40 +76,56 @@ const theme = extendTheme({
     },
     MuiButton: {
       styleOverrides: {
-        root: {
+        root: ({ theme }) => ({
+          color: theme.palette.text.primary,
           textTransform: 'none',
           '&:hover': {
-            borderWidth: '2px'
+            color: theme.palette.text.secondary,
+            background: theme.palette.primary.light
+          },
+          '&.MuiButton-outlined': {
+            borderColor: theme.palette.text.secondary,
+            background: 'transparent',
+            color:  theme.palette.text.secondary,
+            '&:hover': {
+              borderWidth: '2px'
+            }
+          },
+          '&.MuiButton-contained': {
+            color: theme.palette.text.secondary
           }
-        }
+        })
       }
     },
     MuiOutlinedInput: {
       styleOverrides: {
-        // eslint-disable-next-line no-unused-vars
         root: ({ theme }) => ({
-          // color: theme.palette.primary.main,
           fontSize: '0.875rem',
-          // '.MuiOutlinedInput-notchedOutline': {
-          //   borderColor: theme.palette.primary.light
-          // },
-          // '&:hover': {
-          //   '.MuiOutlinedInput-notchedOutline': {
-          //     borderColor: theme.palette.primary.main
-          //   }
-          // },
-          '& fieldset': { borderWidth: '1px !important' },
-          '&:hover fieldset': { borderWidth: '2px !important' },
-          '&.Mui-focused fieldset': { borderWidth: '2px !important' }
+          color: theme.palette.text.primary,
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.primary.main
+          },
+          '&:hover': {
+            '.MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.primary.main,
+              borderWidth: '2px'
+            }
+          },
+          '& .MuiSvgIcon-root': { color: theme.palette.primary.main },
+          '&.Mui-focused fieldset': {
+            borderColor: `${theme.palette.primary.main}`
+          }
+          // '&:hover fieldset': { borderWidth: '2px !important' },
+          // '&.Mui-focused fieldset': { borderWidth: '2px !important' }
         })
       }
     },
     MuiInputLabel: {
       styleOverrides: {
-        // eslint-disable-next-line no-unused-vars
         root: ({ theme }) => ({
-          // color: theme.palette.primary.main,
-          fontSize: '0.875rem'
+          color: theme.palette.text.primary,
+          fontSize: '0.875rem',
+          '&.Mui-focused': { color: theme.palette.mode === 'dark' ? theme.palette.text.primary : null }
         })
       }
     },

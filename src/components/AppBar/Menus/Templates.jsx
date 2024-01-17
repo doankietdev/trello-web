@@ -21,7 +21,7 @@ function Templates() {
   return (
     <div>
       <Button
-        sx={{ color: 'white' }}
+        sx={{ color: 'text.secondary' }}
         id="basic-button-templates"
         aria-controls={open ? 'basic-menu-templates' : undefined}
         aria-haspopup="true"
