@@ -40,7 +40,7 @@ function ComlumnsList({ columns }) {
               minWidth: '300px',
               maxWidth: '300px',
               bgcolor: (theme) =>
-                theme.palette.mode === 'dark' ? '#333543' : '#ebecf0',
+                theme.palette.background.default,
               mx: 1,
               borderRadius: '6px',
               height: 'fit-content',
@@ -59,13 +59,13 @@ function ComlumnsList({ columns }) {
                 endAdornment: columnTitleInput ? (
                   <InputAdornment>
                     <Button
+                      onClick={() => setColumnTitleInput('')}
                       sx={{
-                        minWidth: '40px',
-                        maxWidth: '40px',
+                        minWidth: '36px',
+                        maxWidth: '36px',
+                        bgcolor: 'transparent',
                         '&:hover': {
-                          bgcolor: 'transparent'
-                        },
-                        '&:focus': {
+                          // bgcolor: (theme) => theme.palette.mode === 'light' ? '#D0D4DB' : null
                           bgcolor: 'transparent'
                         }
                       }}
@@ -73,8 +73,9 @@ function ComlumnsList({ columns }) {
                       <CloseIcon
                         position="start"
                         fontSize="small"
-                        sx={{ color: '#000000' }}
-                        onClick={() => setColumnTitleInput('')}
+                        sx={{
+                          color: (theme) => `${theme.palette.text.primary} !important`
+                        }}
                       />
                     </Button>
                   </InputAdornment>
@@ -83,26 +84,17 @@ function ComlumnsList({ columns }) {
               sx={{
                 width: '100%',
                 mb: 1,
-                '& label': { color: '#44546F', fontWeight: 'bold' },
-                '& input': { fontSize: '1rem', fontWeight: 'bold' },
-                '& label.Mui-focused': { color: 'primary.main' },
-                '& .MuiOutlinedInput-root': {
-                  pr: 0.5,
-                  '& fieldset': { borderColor: 'primary.main' },
-                  '&:hover fieldset': { borderColor: 'primary.main' },
-                  '&.Mui-focused fieldset': { borderColor: 'primary.main' }
-                }
+                opacity: 0.8,
+                '& label': { fontWeight: 'bold' },
+                '& input': { fontWeight: 'bold' },
+                '& .MuiOutlinedInput-root': { pr: 0.3 }
               }}
             />
             <Button
+              variant="contained"
+              startIcon={<NoteAddIcon />}
               sx={{
-                px: 1.5,
-                color: 'white',
-                bgcolor: 'primary.main',
-                '&:hover': {
-                  color: 'white',
-                  bgcolor: 'primary.dark'
-                }
+                px: 1.5
               }}
             >
               Add list
@@ -110,12 +102,12 @@ function ComlumnsList({ columns }) {
             <Button
               onClick={() => setOpenAddListForm(!isOpenAddListForm)}
               sx={{
-                color: 'white',
                 maxWidth: '40px',
                 minWidth: '40px',
                 ml: 0.8,
+                bgcolor: 'transparent',
                 '&:hover': {
-                  bgcolor: '#D0D4DB'
+                  bgcolor: 'hoverBgcolor.secondary'
                 }
               }}
             >
@@ -123,10 +115,9 @@ function ComlumnsList({ columns }) {
                 position="start"
                 fontSize="small"
                 sx={{
-                  color: '#000000',
+                  color: 'text.primary',
                   cursor: 'pointer'
                 }}
-                // onClick={() => setSearchValue('')}
               />
             </Button>
           </Box>
@@ -138,21 +129,24 @@ function ComlumnsList({ columns }) {
               maxWidth: '200px',
               mx: 2,
               borderRadius: '6px',
-              height: 'fit-content',
-              bgcolor: '#ffffff3d'
+              height: 'fit-content'
             }}
           >
             <Button
               startIcon={<NoteAddIcon />}
+              variant="contained"
               sx={{
-                color: 'white',
                 width: '100%',
                 justifyContent: 'flex-start',
                 pl: 2.5,
-                py: 1
+                py: 1,
+                bgcolor: '#ffffff30',
+                '&:hover': {
+                  bgcolor: '#ffffff54'
+                }
               }}
             >
-              Add another list
+              Add new list
             </Button>
           </Box>
         )}

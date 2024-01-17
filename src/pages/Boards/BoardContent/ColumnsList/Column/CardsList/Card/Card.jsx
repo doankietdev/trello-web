@@ -23,17 +23,18 @@ function Card({ card }) {
     transform: CSS.Translate.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : undefined,
-    border: isDragging ? '2px solid #2ecc71' : undefined
+    border: (theme) => isDragging ? `2px solid ${theme.palette.primary.light}` : undefined
   }
 
   const shouldShowCardActions = !!card?.memberIds?.length || !!card?.comments?.length || !!card?.attachments?.length
 
   return (
     <MuiCard
-      ref={setNodeRef} style={dndCardStyles} {...attributes} {...listeners}
+      ref={setNodeRef} {...attributes} {...listeners}
       sx={{
+        ...dndCardStyles,
         cursor: 'pointer',
-        boxShadow: '0 1px 1px rgb(0, 0, 0, 0.2)',
+        boxShadow: '0 1px 1px rgb(0, 0, 0, 0.25)',
         opacity: card?.FE_PlaceholderCard ? '0' : '1',
         minWidth: card?.FE_PlaceholderCard ? '280px' : 'unset',
         pointerEvents: card?.FE_PlaceholderCard ? 'none' : 'unset',
@@ -47,11 +48,26 @@ function Card({ card }) {
       {shouldShowCardActions &&
         <CardActions sx={{ p: '0 4px 8px' }}>
           {!!card?.memberIds?.length &&
-            <Button size="small" startIcon={<GroupIcon />}>{card?.memberIds?.length}</Button>}
+            <Button size="small"
+              startIcon={<GroupIcon />}
+              sx={{ bgcolor: 'transparent', color: 'text.primary' }}
+            >
+              {card?.memberIds?.length}
+            </Button>}
           {!!card?.comments?.length &&
-            <Button size="small" startIcon={<CommentIcon />}>{card?.comments?.length}</Button>}
+            <Button size="small"
+              startIcon={<CommentIcon />}
+              sx={{ bgcolor: 'transparent', color: 'text.primary' }}
+            >
+              {card?.comments?.length}
+            </Button>}
           {!!card?.attachments?.length &&
-            <Button size="small" startIcon={<AttachmentIcon />}>{card?.attachments?.length}</Button>}
+            <Button size="small"
+              startIcon={<AttachmentIcon />}
+              sx={{ bgcolor: 'transparent', color: 'text.primary' }}
+            >
+              {card?.attachments?.length}
+            </Button>}
         </CardActions>
       }
     </MuiCard>

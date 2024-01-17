@@ -49,13 +49,12 @@ function Column({ column }) {
   const orderedCards = mapOrder(cards, cardOrderIds, '_id')
 
   return (
-    <Box ref={setNodeRef} style={dndColumnStyles} {...attributes}>
+    <Box ref={setNodeRef} style={dndColumnStyles} {...listeners} {...attributes}>
       <Box
         sx={{
           minWidth: '300px',
           maxWidth: '300px',
-          bgcolor: (theme) =>
-            theme.palette.mode === 'dark' ? '#333543' : '#ebecf0',
+          bgcolor: 'background.default',
           mx: 1,
           borderRadius: '6px',
           height: 'fit-content',
@@ -86,7 +85,7 @@ function Column({ column }) {
           <Box>
             <Tooltip title="More options">
               <ExpandMoreIcon
-                sx={{ color: 'text.primary', cursor: 'pointer' }}
+                sx={{ cursor: 'pointer' }}
                 id="basic-column-dropdown"
                 aria-controls={open ? 'basic-column-menu-dropdown' : undefined}
                 aria-haspopup="true"
@@ -151,9 +150,33 @@ function Column({ column }) {
             justifyContent: 'space-between'
           }}
         >
-          <Button startIcon={<AddCardIcon />}>Add new card</Button>
-          <Tooltip {...listeners} title="Drag to move">
-            <DragHandleIcon sx={{ cursor: 'pointer' }} />
+          <Button
+            startIcon={<AddCardIcon />}
+            sx={{
+              color: (theme) => theme.palette.mode === 'dark'
+                ? theme.palette.text.primary
+                : null,
+              '&:hover': { bgcolor: 'primary.main' }
+            }}
+          >
+            Add new card
+          </Button>
+          <Tooltip title="Drag to move">
+            <Button
+              sx={{
+                maxWidth: '42px',
+                minWidth: '42px',
+                color: (theme) => theme.palette.mode === 'dark'
+                  ? theme.palette.text.primary
+                  : null,
+                '&:hover': {
+                  color: 'text.primary',
+                  bgcolor: 'hoverBgcolor.secondary'
+                }
+              }}
+            >
+              <DragHandleIcon sx={{ cursor: 'pointer' }} />
+            </Button>
           </Tooltip>
         </Box>
       </Box>
