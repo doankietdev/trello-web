@@ -33,6 +33,7 @@ function Card({ card }) {
       ref={setNodeRef} {...attributes} {...listeners}
       sx={{
         ...dndCardStyles,
+        mb: 1,
         cursor: 'pointer',
         boxShadow: '0 1px 1px rgb(0, 0, 0, 0.25)',
         opacity: card?.FE_PlaceholderCard ? '0' : '1',
@@ -50,21 +51,30 @@ function Card({ card }) {
           {!!card?.memberIds?.length &&
             <Button size="small"
               startIcon={<GroupIcon />}
-              sx={{ bgcolor: 'transparent', color: 'text.primary' }}
+              sx={{
+                bgcolor: 'transparent',
+                '&:hover': { bgcolor: 'hoverBgcolor.secondary', color: 'text.primary' }
+              }}
             >
               {card?.memberIds?.length}
             </Button>}
           {!!card?.comments?.length &&
             <Button size="small"
               startIcon={<CommentIcon />}
-              sx={{ bgcolor: 'transparent', color: 'text.primary' }}
+              sx={{
+                bgcolor: 'transparent',
+                '&:hover': { bgcolor: 'hoverBgcolor.secondary', color: 'text.primary' }
+              }}
             >
               {card?.comments?.length}
             </Button>}
           {!!card?.attachments?.length &&
             <Button size="small"
               startIcon={<AttachmentIcon />}
-              sx={{ bgcolor: 'transparent', color: 'text.primary' }}
+              sx={{
+                bgcolor: 'transparent',
+                '&:hover': { bgcolor: 'hoverBgcolor.secondary', color: 'text.primary' }
+              }}
             >
               {card?.attachments?.length}
             </Button>}
