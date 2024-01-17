@@ -166,13 +166,7 @@ function Column({ column }) {
               sx={{
                 maxWidth: '42px',
                 minWidth: '42px',
-                color: (theme) => theme.palette.mode === 'dark'
-                  ? theme.palette.text.primary
-                  : null,
-                '&:hover': {
-                  color: 'text.primary',
-                  bgcolor: 'hoverBgcolor.secondary'
-                }
+                color: (theme) => theme.palette.mode === 'dark' && theme.palette.text.primary
               }}
             >
               <DragHandleIcon sx={{ cursor: 'pointer' }} />

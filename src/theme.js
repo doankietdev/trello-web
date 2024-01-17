@@ -32,7 +32,7 @@ const theme = extendTheme({
           paper: '#FFFFFF'
         },
         hoverBgcolor: {
-          secondary: '#00000026'
+          secondary: '#00000012'
         }
       }
     },
@@ -48,7 +48,8 @@ const theme = extendTheme({
           secondary: '#FFFFFF'
         },
         background: {
-          default: '#111111'
+          default: '#0e1217',
+          paper: '#1c1f26'
         },
         hoverBgcolor: {
           secondary: '#FFFFFF26'
@@ -65,11 +66,11 @@ const theme = extendTheme({
             height: '8px'
           },
           '*::-webkit-scrollbar-thumb': {
-            background: '#bdc3c7',
+            background: '#c5c9d1',
             borderRadius: '8px'
           },
           '*::-webkit-scrollbar-thumb:hover': {
-            background: 'white'
+            background: '#d2d7df'
           }
         }
       }
