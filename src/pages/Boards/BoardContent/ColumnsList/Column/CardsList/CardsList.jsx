@@ -45,6 +45,7 @@ function CardsList({ newCardForm, cards }) {
               label="Enter list title"
               type="text"
               size="small"
+              data-no-dnd
               autoFocus
               value={cardTitleInput}
               onChange={handleEnterCardTitle}
@@ -84,6 +85,7 @@ function CardsList({ newCardForm, cards }) {
               }}
             />
             <Button
+              data-no-dnd
               variant="contained"
               startIcon={<NoteAddIcon />}
               sx={{
@@ -93,6 +95,7 @@ function CardsList({ newCardForm, cards }) {
               Add list
             </Button>
             <Button
+              data-no-dnd
               onClick={() => newCardForm.setOpenNewCardForm(false)}
               sx={{
                 maxWidth: '40px',

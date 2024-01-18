@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import Box from '@mui/material/Box'
 import {
   DndContext,
-  MouseSensor,
-  TouchSensor,
+  // MouseSensor,
+  // TouchSensor,
   useSensor,
   useSensors,
   DragOverlay,
@@ -13,6 +13,7 @@ import {
   getFirstCollision
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
+import { MouseSensor, TouchSensor } from '~/customLibraries/DndKitSensors'
 import { cloneDeep } from 'lodash'
 import ColumnsList from './ColumnsList/ColumnsList'
 import { mapOrder } from '~/utils/sorts'

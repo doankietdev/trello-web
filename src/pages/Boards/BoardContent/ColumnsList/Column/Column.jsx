@@ -88,7 +88,7 @@ function Column({ column }) {
           >
             {column?.title}
           </Typography>
-          <Box>
+          <Box data-no-dnd>
             <Tooltip title="More options">
               <ExpandMoreIcon
                 sx={{ cursor: 'pointer' }}
@@ -102,6 +102,7 @@ function Column({ column }) {
             <Menu
               id="basic-column-menu-dropdown"
               anchorEl={anchorEl}
+              data-no-dnd
               open={open}
               onClose={handleClose}
               MenuListProps={{
@@ -158,6 +159,7 @@ function Column({ column }) {
             }}
           >
             <Button
+              data-no-dnd
               onClick={() => setOpenNewCardForm(true)}
               startIcon={<AddCardIcon />}
               sx={{
