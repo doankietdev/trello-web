@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import CloseIcon from '@mui/icons-material/Close'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { toast } from 'react-toastify'
 import Card from './Card/Card'
 
 function CardsList({ newCardForm, cards }) {
@@ -16,6 +17,12 @@ function CardsList({ newCardForm, cards }) {
   }, [newCardForm])
 
   const handleEnterCardTitle = (event) => setCardTitleInput(event.target.value)
+  const handleAddCard = () => {
+    if (!cardTitleInput) {
+      toast.error('Please enter card title')
+      return
+    }
+  }
 
   return (
     <SortableContext items={cards.map(card => card._id)} strategy={verticalListSortingStrategy}>
@@ -88,11 +95,12 @@ function CardsList({ newCardForm, cards }) {
               data-no-dnd
               variant="contained"
               startIcon={<NoteAddIcon />}
+              onClick={handleAddCard}
               sx={{
                 px: 1.5
               }}
             >
-              Add list
+              Add card
             </Button>
             <Button
               data-no-dnd
