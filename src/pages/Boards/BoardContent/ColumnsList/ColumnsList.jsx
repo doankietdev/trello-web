@@ -9,11 +9,19 @@ import {
   SortableContext,
   horizontalListSortingStrategy
 } from '@dnd-kit/sortable'
+import { toast } from 'react-toastify'
 import Column from './Column/Column'
 
 function ComlumnsList({ columns }) {
   const [isOpenAddListForm, setOpenAddListForm] = useState(false)
-  const [columnTitleInput, setColumnTitleInput] = useState('')
+  const [listTitleInput, setListTitleInput] = useState('')
+
+  const handleAddList = () => {
+    if (!listTitleInput) {
+      toast.error('Please enter list title', { position: 'bottom-left' })
+      return
+    }
+  }
 
   return (
     <SortableContext
@@ -54,13 +62,13 @@ function ComlumnsList({ columns }) {
               type="text"
               size="small"
               autoFocus
-              value={columnTitleInput}
-              onChange={(e) => setColumnTitleInput(e.target.value)}
+              value={listTitleInput}
+              onChange={(e) => setListTitleInput(e.target.value)}
               InputProps={{
-                endAdornment: columnTitleInput ? (
+                endAdornment: listTitleInput ? (
                   <InputAdornment>
                     <Button
-                      onClick={() => setColumnTitleInput('')}
+                      onClick={() => setListTitleInput('')}
                       sx={{
                         minWidth: '36px',
                         maxWidth: '36px',
@@ -94,6 +102,7 @@ function ComlumnsList({ columns }) {
             <Button
               variant="contained"
               startIcon={<NoteAddIcon />}
+              onClick={handleAddList}
               sx={{
                 px: 1.5
               }}
