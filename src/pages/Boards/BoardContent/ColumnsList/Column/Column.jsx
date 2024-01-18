@@ -37,6 +37,7 @@ function Column({ column }) {
   }
 
   const [anchorEl, setAnchorEl] = useState(null)
+  const [isOpenNewCardForm, setOpenNewCardForm] = useState(false)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -49,7 +50,12 @@ function Column({ column }) {
   const orderedCards = mapOrder(cards, cardOrderIds, '_id')
 
   return (
-    <Box ref={setNodeRef} style={dndColumnStyles} {...listeners} {...attributes}>
+    <Box
+      ref={setNodeRef}
+      style={dndColumnStyles}
+      {...listeners}
+      {...attributes}
+    >
       <Box
         sx={{
           minWidth: '300px',
@@ -138,41 +144,46 @@ function Column({ column }) {
         </Box>
 
         {/*Card list*/}
-        <CardsList cards={orderedCards} />
+        <CardsList newCardForm={{ isOpenNewCardForm, setOpenNewCardForm }} cards={orderedCards} />
 
         {/* Box column footer */}
-        <Box
-          sx={{
-            height: (theme) => theme.trello.columnFooterHeight,
-            p: 2,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Button
-            startIcon={<AddCardIcon />}
+        {!isOpenNewCardForm && (
+          <Box
             sx={{
-              color: (theme) => theme.palette.mode === 'dark'
-                ? theme.palette.text.primary
-                : null,
-              '&:hover': { bgcolor: 'primary.main' }
+              height: (theme) => theme.trello.columnFooterHeight,
+              p: 2,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
             }}
           >
-            Add new card
-          </Button>
-          <Tooltip title="Drag to move">
             <Button
+              onClick={() => setOpenNewCardForm(true)}
+              startIcon={<AddCardIcon />}
               sx={{
-                maxWidth: '42px',
-                minWidth: '42px',
-                color: (theme) => theme.palette.mode === 'dark' && theme.palette.text.primary
+                color: (theme) =>
+                  theme.palette.mode === 'dark'
+                    ? theme.palette.text.primary
+                    : null,
+                '&:hover': { bgcolor: 'primary.main' }
               }}
             >
-              <DragHandleIcon sx={{ cursor: 'pointer' }} />
+              Add new card
             </Button>
-          </Tooltip>
-        </Box>
+            <Tooltip title="Drag to move">
+              <Button
+                sx={{
+                  maxWidth: '42px',
+                  minWidth: '42px',
+                  color: (theme) =>
+                    theme.palette.mode === 'dark' && theme.palette.text.primary
+                }}
+              >
+                <DragHandleIcon sx={{ cursor: 'pointer' }} />
+              </Button>
+            </Tooltip>
+          </Box>
+        )}
       </Box>
     </Box>
   )

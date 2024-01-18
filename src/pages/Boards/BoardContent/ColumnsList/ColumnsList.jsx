@@ -53,6 +53,7 @@ function ComlumnsList({ columns }) {
               label="Enter list title"
               type="text"
               size="small"
+              autoFocus
               value={columnTitleInput}
               onChange={(e) => setColumnTitleInput(e.target.value)}
               InputProps={{
