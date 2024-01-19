@@ -17,6 +17,11 @@ export const createNewColumnAPI = async (column) => {
   return response.data?.metadata?.column
 }
 
+export const updateColumnAPI = async (columnId, updateData) => {
+  const response = await axios.patch(`${API_ROOT}/v1/columns/${columnId}`, updateData)
+  return response.data?.metadata?.column
+}
+
 export const createNewCardAPI = async (card) => {
   const response = await axios.post(`${API_ROOT}/v1/cards`, card)
   return response.data?.metadata?.card

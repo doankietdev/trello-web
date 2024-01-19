@@ -28,7 +28,7 @@ function ComlumnsList({ columns, createNewColumn, createNewCard }) {
 
   return (
     <SortableContext
-      items={columns.map((column) => column._id)}
+      items={columns?.map((column) => column._id)}
       strategy={horizontalListSortingStrategy}
     >
       <Box
