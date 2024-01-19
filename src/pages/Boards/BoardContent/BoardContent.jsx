@@ -26,7 +26,7 @@ const activeDragItemTypes = {
   card: 'card'
 }
 
-function BoardContent({ board, createNewColumn }) {
+function BoardContent({ board, createNewColumn, createNewCard }) {
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
       styles: { active: { opacity: '0.5' }
@@ -246,7 +246,11 @@ function BoardContent({ board, createNewColumn }) {
           p: '10px 0'
         }}
       >
-        <ColumnsList columns={orderedColumns} createNewColumn={createNewColumn} />
+        <ColumnsList
+          columns={orderedColumns}
+          createNewColumn={createNewColumn}
+          createNewCard={createNewCard}
+        />
         <DragOverlay dropAnimation={dropAnimation} >
           {(!activeDragItemType) && null}
           {(activeDragItemType === activeDragItemTypes.column) && <Column column={activeDragItemData} />}

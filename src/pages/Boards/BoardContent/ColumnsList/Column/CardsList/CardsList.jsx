@@ -9,7 +9,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { toast } from 'react-toastify'
 import Card from './Card/Card'
 
-function CardsList({ newCardForm, cards }) {
+function CardsList({ newCardForm, cards, columnId, createNewCard }) {
   const [cardTitleInput, setCardTitleInput] = useState('')
   const cardTitleFormElement = useRef()
   useEffect(() => {
@@ -17,11 +17,14 @@ function CardsList({ newCardForm, cards }) {
   }, [newCardForm])
 
   const handleEnterCardTitle = (event) => setCardTitleInput(event.target.value)
-  const handleAddCard = () => {
+  const handleAddCard = async () => {
     if (!cardTitleInput) {
       toast.error('Please enter card title')
       return
     }
+
+    const card = { title: cardTitleInput }
+    await createNewCard(card, columnId)
   }
 
   return (
@@ -58,7 +61,7 @@ function CardsList({ newCardForm, cards }) {
               onChange={handleEnterCardTitle}
               InputProps={{
                 endAdornment: cardTitleInput ? (
-                  <InputAdornment>
+                  <InputAdornment position="end">
                     <Button
                       onClick={() => setCardTitleInput('')}
                       sx={{
@@ -85,7 +88,6 @@ function CardsList({ newCardForm, cards }) {
               sx={{
                 width: '100%',
                 my: 1,
-                opacity: 0.8,
                 '& label': { fontWeight: 'bold' },
                 '& textarea': { fontWeight: 'bold' },
                 '& .MuiOutlinedInput-root': { pr: 0.3 }

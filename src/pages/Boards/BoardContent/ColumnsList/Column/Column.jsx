@@ -20,7 +20,7 @@ import { CSS } from '@dnd-kit/utilities'
 import CardsList from './CardsList/CardsList'
 import { mapOrder } from '~/utils/sorts'
 
-function Column({ column }) {
+function Column({ column, createNewCard }) {
   const {
     attributes,
     listeners,
@@ -145,7 +145,12 @@ function Column({ column }) {
         </Box>
 
         {/*Card list*/}
-        <CardsList newCardForm={{ isOpenNewCardForm, setOpenNewCardForm }} cards={orderedCards} />
+        <CardsList
+          newCardForm={{ isOpenNewCardForm, setOpenNewCardForm }}
+          cards={orderedCards}
+          columnId={column?._id}
+          createNewCard={createNewCard}
+        />
 
         {/* Box column footer */}
         {!isOpenNewCardForm && (
