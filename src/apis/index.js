@@ -7,6 +7,11 @@ export const fetchBoardDetailsAPI = async (boardId) => {
   return response.data?.metadata?.board
 }
 
+export const updateBoardAPI = async (boardId, updateData) => {
+  const response = await axios.patch(`${API_ROOT}/v1/boards/${boardId}`, updateData)
+  return response.data?.metadata?.board
+}
+
 export const createNewColumnAPI = async (column) => {
   const response = await axios.post(`${API_ROOT}/v1/columns`, column)
   return response.data?.metadata?.column

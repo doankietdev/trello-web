@@ -3,7 +3,12 @@ import Container from '@mui/material/Container'
 import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
-import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI } from '~/apis'
+import {
+  fetchBoardDetailsAPI,
+  updateBoardAPI,
+  createNewColumnAPI,
+  createNewCardAPI
+} from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatter'
 
 function Board() {
@@ -55,11 +60,21 @@ function Board() {
     setBoard(boardToUpdate)
   }
 
+  // remember debug at here when bug drag column
+  const moveColumns = async (columnOrderIds) => {
+    await updateBoardAPI(board?._id, { columnOrderIds })
+  }
+
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <AppBar />
       <BoardBar board={board} />
-      <BoardContent board={board} createNewColumn={createNewColumn} createNewCard={createNewCard} />
+      <BoardContent
+        board={board}
+        createNewColumn={createNewColumn}
+        moveColumns={moveColumns}
+        createNewCard={createNewCard}
+      />
     </Container>
   )
 }
