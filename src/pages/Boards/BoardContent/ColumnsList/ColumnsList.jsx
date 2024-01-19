@@ -12,15 +12,18 @@ import {
 import { toast } from 'react-toastify'
 import Column from './Column/Column'
 
-function ComlumnsList({ columns }) {
+function ComlumnsList({ columns, createNewColumn }) {
   const [isOpenAddListForm, setOpenAddListForm] = useState(false)
-  const [listTitleInput, setListTitleInput] = useState('')
+  const [columnTitleInput, setColumnTitleInput] = useState('')
 
-  const handleAddList = () => {
-    if (!listTitleInput) {
+  const handleAddList = async () => {
+    if (!columnTitleInput) {
       toast.error('Please enter list title', { position: 'bottom-left' })
       return
     }
+
+    const column = { title: columnTitleInput }
+    await createNewColumn(column)
   }
 
   return (
@@ -62,13 +65,13 @@ function ComlumnsList({ columns }) {
               type="text"
               size="small"
               autoFocus
-              value={listTitleInput}
-              onChange={(e) => setListTitleInput(e.target.value)}
+              value={columnTitleInput}
+              onChange={(e) => setColumnTitleInput(e.target.value)}
               InputProps={{
-                endAdornment: listTitleInput ? (
-                  <InputAdornment>
+                endAdornment: columnTitleInput ? (
+                  <InputAdornment position="end">
                     <Button
-                      onClick={() => setListTitleInput('')}
+                      onClick={() => setColumnTitleInput('')}
                       sx={{
                         minWidth: '36px',
                         maxWidth: '36px',
