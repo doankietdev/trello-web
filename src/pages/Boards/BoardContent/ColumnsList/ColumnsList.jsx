@@ -12,7 +12,7 @@ import {
 import { toast } from 'react-toastify'
 import Column from './Column/Column'
 
-function ComlumnsList({ columns, createNewColumn }) {
+function ComlumnsList({ columns, createNewColumn, createNewCard }) {
   const [isOpenAddListForm, setOpenAddListForm] = useState(false)
   const [columnTitleInput, setColumnTitleInput] = useState('')
 
@@ -42,7 +42,7 @@ function ComlumnsList({ columns, createNewColumn }) {
         }}
       >
         {columns?.map((column) => (
-          <Column key={column._id} column={column} />
+          <Column key={column._id} column={column} createNewCard={createNewCard} />
         ))}
         {isOpenAddListForm ? (
           <Box
