@@ -4,6 +4,7 @@ import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 import { fetchBoardDetailsAPI, createNewColumnAPI, createNewCardAPI } from '~/apis'
+import { generatePlaceholderCard } from '~/utils/formatter'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -11,8 +12,14 @@ function Board() {
   useEffect(() => {
     const boardId = '65a2f9773f5655539e391e92'
     fetchBoardDetailsAPI(boardId)
-      .then(data => {
-        setBoard(data?.metadata?.board)
+      .then(board => {
+        board?.columns?.forEach(column => {
+          if (!column?.cards?.length) {
+            column.cards = [generatePlaceholderCard(board?._id, column?._id)]
+            column.cardOrderIds = [column.cards[0]?._id]
+          }
+        })
+        setBoard(board)
       })
   }, [])
 
@@ -23,7 +30,11 @@ function Board() {
     })
 
     const boardToUpdate = { ...board }
-    boardToUpdate.columns.push(responseColumn)
+    boardToUpdate.columns.push({
+      ...responseColumn,
+      cards: [generatePlaceholderCard(board?._id, column?._id)],
+      cardOrderIds: [generatePlaceholderCard(board?._id, column?._id)?._id]
+    })
     boardToUpdate.columnOrderIds.push(responseColumn?._id)
     setBoard(boardToUpdate)
   }
