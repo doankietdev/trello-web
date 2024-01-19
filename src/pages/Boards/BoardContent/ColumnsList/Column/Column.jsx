@@ -46,8 +46,7 @@ function Column({ column, createNewCard }) {
     setAnchorEl(null)
   }
 
-  const { cards, cardOrderIds } = column
-  const orderedCards = mapOrder(cards, cardOrderIds, '_id')
+  const orderedCards = column?.cards
 
   return (
     <Box
