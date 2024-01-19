@@ -4,7 +4,7 @@ import { API_ROOT } from '~/utils/constants'
 
 export const fetchBoardDetailsAPI = async (boardId) => {
   const response = await axios.get(`${API_ROOT}/v1/boards/${boardId}`)
-  return response.data
+  return response.data?.metadata?.board
 }
 
 export const createNewColumnAPI = async (column) => {
