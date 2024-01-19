@@ -26,7 +26,7 @@ const activeDragItemTypes = {
   card: 'card'
 }
 
-function BoardContent({ board, createNewColumn, createNewCard }) {
+function BoardContent({ board, createNewColumn, moveColumns, createNewCard }) {
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
       styles: { active: { opacity: '0.5' }
@@ -222,7 +222,9 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
       setOrderedColumns(prevOrderedColumns => {
         const oldIndex = prevOrderedColumns.findIndex(column => column?._id === active?.id)
         const newIndex = prevOrderedColumns.findIndex(column => column?._id === over?.id)
-        return arrayMove(prevOrderedColumns, oldIndex, newIndex)
+        const nextOrderedColumns = arrayMove(prevOrderedColumns, oldIndex, newIndex)
+        moveColumns(nextOrderedColumns.map(column => column?._id)) // call API
+        return nextOrderedColumns
       })
     }
 
