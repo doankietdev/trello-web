@@ -3,7 +3,7 @@ import Container from '@mui/material/Container'
 import AppBar from '~/components/AppBar/AppBar'
 import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
-import { fetchBoardDetailsAPI } from '~/apis'
+import { fetchBoardDetailsAPI, createNewColumnAPI } from '~/apis'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -16,11 +16,23 @@ function Board() {
       })
   }, [])
 
+  const createNewColumn = async (column) => {
+    const responseColumn = await createNewColumnAPI({
+      ...column,
+      boardId: board?._id
+    })
+
+    const boardToUpdate = { ...board }
+    boardToUpdate.columns.push(responseColumn)
+    boardToUpdate.columnOrderIds.push(responseColumn?._id)
+    setBoard(boardToUpdate)
+  }
+
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <AppBar />
       <BoardBar board={board} />
-      <BoardContent board={board} />
+      <BoardContent board={board} createNewColumn={createNewColumn} />
     </Container>
   )
 }

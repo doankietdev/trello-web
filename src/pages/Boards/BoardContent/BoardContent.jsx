@@ -26,9 +26,7 @@ const activeDragItemTypes = {
   card: 'card'
 }
 
-function BoardContent({ board }) {
-  const { columns, columnOrderIds } = board || {}
-
+function BoardContent({ board, createNewColumn }) {
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
       styles: { active: { opacity: '0.5' }
@@ -38,8 +36,8 @@ function BoardContent({ board }) {
 
   const [orderedColumns, setOrderedColumns] = useState([])
   useEffect(() => {
-    setOrderedColumns(mapOrder(columns, columnOrderIds, '_id'))
-  }, [columns, columnOrderIds])
+    setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
+  }, [board])
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: { distance: 10 }
@@ -248,7 +246,7 @@ function BoardContent({ board }) {
           p: '10px 0'
         }}
       >
-        <ColumnsList columns={orderedColumns} />
+        <ColumnsList columns={orderedColumns} createNewColumn={createNewColumn} />
         <DragOverlay dropAnimation={dropAnimation} >
           {(!activeDragItemType) && null}
           {(activeDragItemType === activeDragItemTypes.column) && <Column column={activeDragItemData} />}
