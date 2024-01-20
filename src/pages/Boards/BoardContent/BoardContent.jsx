@@ -19,6 +19,8 @@ import ColumnsList from './ColumnsList/ColumnsList'
 import Column from './ColumnsList/Column/Column'
 import Card from './ColumnsList/Column/CardsList/Card/Card'
 import { generatePlaceholderCard } from '~/utils/formatter'
+import { moveCardToAnotherColumnAPI } from '~/apis';
+import { SUFFIX_PLACEHOLDER_CARD } from '~/utils/constants'
 
 const activeDragItemTypes = {
   column: 'column',
@@ -30,8 +32,7 @@ function BoardContent({
   createNewColumn,
   moveColumns,
   createNewCard,
-  moveCardInSameColumn,
-  moveCardToAnotherColumn
+  moveCardInSameColumn
 }) {
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
@@ -59,11 +60,21 @@ function BoardContent({
   const lastOverId = useRef(null)
 
   const findColumnByCardId = (cardId) => {
-    return orderedColumns.find(column => column?.cards?.some(card => card._id === cardId))
+    let overColumn = null
+    // Check cardId?.includes(SUFFIX_PLACEHOLDER_CARD) to fix bug:
+    // call moveCardToAnotherColumnAPI error, when fast drag card
+    // to another empty column
+    if (cardId?.includes(SUFFIX_PLACEHOLDER_CARD)) {
+      const columnId = cardId?.slice(0, cardId?.indexOf(SUFFIX_PLACEHOLDER_CARD))
+      overColumn = orderedColumns.find(column => column?._id === columnId)
+    } else {
+      overColumn = orderedColumns.find(column => column?.cards?.some(card => card._id === cardId))
+    }
+    return overColumn
   }
 
   const moveCardBetweenColumns = (
-    activeColumn,
+    oldColumn,
     overColumn,
     activeDraggingCardId,
     overCardId,
@@ -74,7 +85,7 @@ function BoardContent({
   ) => {
     setOrderedColumns(prevColumns => {
       const nextColumns = cloneDeep(prevColumns)
-      const nextActiveColumn = nextColumns.find(column => column._id === activeColumn?._id)
+      const nextOldColumn = nextColumns.find(column => column._id === oldColumn?._id)
       const nextOverColumn = nextColumns.find(column => column._id === overColumn?._id)
 
       const overCardIndex = nextOverColumn?.cards?.findIndex(card => card?._id === overCardId)
@@ -84,14 +95,14 @@ function BoardContent({
       const newCardIndex = overCardIndex >= 0 ? overCardIndex + modifier :
         overColumn?.cards?.length + 1
 
-      if (nextActiveColumn) {
-        nextActiveColumn.cards = activeColumn?.cards?.filter(card => card?._id !== activeDraggingCardId)
+      if (nextOldColumn) {
+        nextOldColumn.cards = oldColumn?.cards?.filter(card => card?._id !== activeDraggingCardId)
 
-        if (!nextActiveColumn.cards?.length) {
-          nextActiveColumn.cards = [generatePlaceholderCard(board?._id, activeColumn?._id)]
+        if (!nextOldColumn.cards?.length) {
+          nextOldColumn.cards = [generatePlaceholderCard(board?._id, oldColumn?._id)]
         }
 
-        nextActiveColumn.cardOrderIds = activeColumn?.cards?.map(card => card?._id)
+        nextOldColumn.cardOrderIds = nextOldColumn?.cards?.map(card => card?._id)
       }
       if (nextOverColumn) {
         nextOverColumn.cards = nextOverColumn?.cards?.filter(card =>
@@ -107,13 +118,17 @@ function BoardContent({
       }
 
       if (triggerFrom === 'handleDragEnd') {
-        moveCardToAnotherColumn(
-          activeDraggingCard?._id,
-          oldColumn?._id,
-          oldColumn?.cardOrderIds,
-          nextOverColumn?._id,
-          nextOverColumn?.cardOrderIds
-        )
+        let cardOrderIdsOfPrevColumn = nextOldColumn?.cardOrderIds
+        if (cardOrderIdsOfPrevColumn[0]?.includes(SUFFIX_PLACEHOLDER_CARD)) {
+          cardOrderIdsOfPrevColumn = []
+        }
+        moveCardToAnotherColumnAPI({
+          cardId: activeDraggingCard?._id,
+          prevColumnId: nextOldColumn?._id,
+          cardOrderIdsOfPrevColumn,
+          nextColumnId: nextOverColumn?._id,
+          cardOrderIdsOfNextColumn: nextOverColumn?.cardOrderIds
+        })
       }
 
       return nextColumns
@@ -208,7 +223,6 @@ function BoardContent({
         id: overCardId
       } = over
 
-      const activeColumn = findColumnByCardId(activeDraggingCardId)
       const overColumn = findColumnByCardId(overCardId)
 
       const isDragCardInSameColumn = oldColumn?._id === overColumn?._id
@@ -225,7 +239,7 @@ function BoardContent({
         })
       } else {
         moveCardBetweenColumns(
-          activeColumn,
+          oldColumn,
           overColumn,
           activeDraggingCardId,
           overCardId,

@@ -22,8 +22,20 @@ export const updateColumnAPI = async (columnId, updateData) => {
   return response.data?.metadata?.column
 }
 
-export const moveCardToAnotherColumnAPI = async (updateData) => {
-  const response = await axios.patch(`${API_ROOT}/v1/columns/move-card-to-another-column`, updateData)
+export const moveCardToAnotherColumnAPI = async ({
+  cardId,
+  prevColumnId,
+  cardOrderIdsOfPrevColumn,
+  nextColumnId,
+  cardOrderIdsOfNextColumn,
+}) => {
+  const response = await axios.patch(`${API_ROOT}/v1/columns/move-card-to-another-column`, {
+    cardId,
+    prevColumnId,
+    cardOrderIdsOfPrevColumn,
+    nextColumnId,
+    cardOrderIdsOfNextColumn
+  })
   return response.data?.metadata
 }
 
