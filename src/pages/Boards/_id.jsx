@@ -10,6 +10,7 @@ import {
   updateBoardAPI,
   createNewColumnAPI,
   updateColumnAPI,
+  moveCardToAnotherColumnAPI,
   createNewCardAPI
 } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatter'
@@ -76,6 +77,22 @@ function Board() {
     await updateColumnAPI(columnId, { cardOrderIds })
   }
 
+  const moveCardToAnotherColumn = async (
+    cardId,
+    prevColumnId,
+    cardOrderIdsOfPrevColumn,
+    nextColumnId,
+    cardOrderIdsOfNextColumn
+  ) => {
+    await moveCardToAnotherColumnAPI({
+      cardId,
+      prevColumnId,
+      cardOrderIdsOfPrevColumn,
+      nextColumnId,
+      cardOrderIdsOfNextColumn
+    })
+  }
+
   if (!board) {
     return (
       <Box
@@ -102,6 +119,7 @@ function Board() {
         moveColumns={moveColumns}
         createNewCard={createNewCard}
         moveCardInSameColumn={moveCardInSameColumn}
+        moveCardToAnotherColumn={moveCardToAnotherColumn}
       />
     </Container>
   )

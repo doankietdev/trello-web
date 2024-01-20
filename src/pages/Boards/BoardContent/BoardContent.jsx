@@ -30,7 +30,8 @@ function BoardContent({
   createNewColumn,
   moveColumns,
   createNewCard,
-  moveCardInSameColumn
+  moveCardInSameColumn,
+  moveCardToAnotherColumn
 }) {
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
@@ -68,7 +69,8 @@ function BoardContent({
     overCardId,
     active,
     over,
-    activeDraggingCard
+    activeDraggingCard,
+    triggerFrom
   ) => {
     setOrderedColumns(prevColumns => {
       const nextColumns = cloneDeep(prevColumns)
@@ -103,6 +105,17 @@ function BoardContent({
 
         nextOverColumn.cardOrderIds = nextOverColumn?.cards?.map(card => card?._id)
       }
+
+      if (triggerFrom === 'handleDragEnd') {
+        moveCardToAnotherColumn(
+          activeDraggingCard?._id,
+          oldColumn?._id,
+          oldColumn?.cardOrderIds,
+          nextOverColumn?._id,
+          nextOverColumn?.cardOrderIds
+        )
+      }
+
       return nextColumns
     })
   }
@@ -177,7 +190,8 @@ function BoardContent({
       overCardId,
       active,
       over,
-      activeDraggingCard
+      activeDraggingCard,
+      'handleDragOver'
     )
   }
 
@@ -217,7 +231,8 @@ function BoardContent({
           overCardId,
           active,
           over,
-          activeDraggingCard
+          activeDraggingCard,
+          'handleDragEnd'
         )
       }
     }
