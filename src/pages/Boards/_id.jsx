@@ -10,6 +10,7 @@ import {
   updateBoardAPI,
   createNewColumnAPI,
   updateColumnAPI,
+  deleteColumnAPI,
   createNewCardAPI
 } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatter'
@@ -76,6 +77,16 @@ function Board() {
     await updateColumnAPI(columnId, { cardOrderIds })
   }
 
+  const deleteColumn = async (columnId) => {
+    await deleteColumnAPI(columnId)
+
+    const newBoard = { ...board }
+    newBoard.columns = board?.columns?.filter(column => column?._id !== columnId)
+    newBoard.columnOrderIds = board?.columnOrderIds?.filter(columnOrderId => columnOrderId !== columnId)
+    console.log(newBoard)
+    setBoard(newBoard)
+  }
+
   if (!board) {
     return (
       <Box
@@ -102,6 +113,7 @@ function Board() {
         moveColumns={moveColumns}
         createNewCard={createNewCard}
         moveCardInSameColumn={moveCardInSameColumn}
+        deleteColumn={deleteColumn}
       />
     </Container>
   )

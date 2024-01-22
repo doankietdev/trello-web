@@ -2980,6 +2980,11 @@ make-fetch-happen@^13.0.0:
     promise-retry "^2.0.1"
     ssri "^10.0.0"
 
+material-ui-confirm@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/material-ui-confirm/-/material-ui-confirm-3.0.10.tgz#c3076e8756639dc355f95eaa21c45c42784bc4c3"
+  integrity sha512-+o/9Q1n8YmqG/9pzJvGwbNw4dU1+WABVxaPJsHPmcO5SgK4Ci8WdgYbOIUD4cO4+X5HaPlzr1DhxD8+UTXqstw==
+
 mime-db@1.52.0:
   version "1.52.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"

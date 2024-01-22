@@ -17,10 +17,10 @@ import Button from '@mui/material/Button'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { useConfirm } from 'material-ui-confirm'
 import CardsList from './CardsList/CardsList'
-import { mapOrder } from '~/utils/sorts'
 
-function Column({ column, createNewCard }) {
+function Column({ column, createNewCard, deleteColumn }) {
   const {
     attributes,
     listeners,
@@ -28,7 +28,7 @@ function Column({ column, createNewCard }) {
     transform,
     transition,
     isDragging
-  } = useSortable({ id: column._id, data: { ...column } })
+  } = useSortable({ id: column?._id, data: { ...column } })
   const dndColumnStyles = {
     transform: CSS.Translate.toString(transform),
     transition,
@@ -39,14 +39,29 @@ function Column({ column, createNewCard }) {
   const [anchorEl, setAnchorEl] = useState(null)
   const [isOpenNewCardForm, setOpenNewCardForm] = useState(false)
   const open = Boolean(anchorEl)
-  const handleClick = (event) => {
+
+  const confirmDialog = useConfirm()
+
+  const orderedCards = column?.cards
+
+  const handleOpenMoreOptions = (event) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
   }
 
-  const orderedCards = column?.cards
+  const handleDeleteList = () => {
+    confirmDialog({
+      title: 'Are you sure?',
+      description: 'This action will permanently delete list and its cards! Are you sure?',
+      confirmationText: 'Confirm'
+    })
+      .then(() => {
+        deleteColumn(column?._id)
+      })
+      .catch(() => {})
+  }
 
   return (
     <Box
@@ -95,7 +110,7 @@ function Column({ column, createNewCard }) {
                 aria-controls={open ? 'basic-column-menu-dropdown' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
+                onClick={handleOpenMoreOptions}
               />
             </Tooltip>
             <Menu
@@ -104,36 +119,37 @@ function Column({ column, createNewCard }) {
               data-no-dnd
               open={open}
               onClose={handleClose}
+              onClick={handleClose}
               MenuListProps={{
                 'aria-labelledby': 'basic-column-dropdown'
               }}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem>
                 <ListItemIcon>
                   <AddCardIcon fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Add new card</ListItemText>
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem>
                 <ListItemIcon>
                   <ContentCopy fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Copy</ListItemText>
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem>
                 <ListItemIcon>
                   <ContentPaste fontSize="small" />
                 </ListItemIcon>
                 <ListItemText>Paste</ListItemText>
               </MenuItem>
               <Divider />
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleDeleteList}>
                 <ListItemIcon>
                   <DeleteForeverIcon fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Remove this column</ListItemText>
+                <ListItemText>Delete this list</ListItemText>
               </MenuItem>
-              <MenuItem onClick={handleClose}>
+              <MenuItem>
                 <ListItemIcon>
                   <Cloud fontSize="small" />
                 </ListItemIcon>
