@@ -32,7 +32,8 @@ function BoardContent({
   createNewColumn,
   moveColumns,
   createNewCard,
-  moveCardInSameColumn
+  moveCardInSameColumn,
+  deleteColumn
 }) {
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
@@ -286,6 +287,7 @@ function BoardContent({
           columns={orderedColumns}
           createNewColumn={createNewColumn}
           createNewCard={createNewCard}
+          deleteColumn={deleteColumn}
         />
         <DragOverlay dropAnimation={dropAnimation} >
           {(!activeDragItemType) && null}
