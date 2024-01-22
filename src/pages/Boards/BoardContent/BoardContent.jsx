@@ -19,7 +19,6 @@ import ColumnsList from './ColumnsList/ColumnsList'
 import Column from './ColumnsList/Column/Column'
 import Card from './ColumnsList/Column/CardsList/Card/Card'
 import { generatePlaceholderCard } from '~/utils/formatter'
-import { moveCardToAnotherColumnAPI } from '~/apis';
 import { SUFFIX_PLACEHOLDER_CARD } from '~/utils/constants'
 
 const activeDragItemTypes = {
@@ -33,6 +32,7 @@ function BoardContent({
   moveColumns,
   createNewCard,
   moveCardInSameColumn,
+  moveCardInAnotherColumn,
   deleteColumn
 }) {
   const dropAnimation = {
@@ -119,16 +119,12 @@ function BoardContent({
       }
 
       if (triggerFrom === 'handleDragEnd') {
-        let cardOrderIdsOfPrevColumn = nextOldColumn?.cardOrderIds
-        if (cardOrderIdsOfPrevColumn[0]?.includes(SUFFIX_PLACEHOLDER_CARD)) {
-          cardOrderIdsOfPrevColumn = []
-        }
-        moveCardToAnotherColumnAPI({
+        moveCardInAnotherColumn({
           cardId: activeDraggingCard?._id,
           prevColumnId: nextOldColumn?._id,
-          cardOrderIdsOfPrevColumn,
+          newCardsOfPrevColumn: nextOldColumn?.cards,
           nextColumnId: nextOverColumn?._id,
-          cardOrderIdsOfNextColumn: nextOverColumn?.cardOrderIds
+          newCardsOfNextColumn: nextOverColumn?.cards
         })
       }
 
@@ -235,7 +231,7 @@ function BoardContent({
           const targetColumn = nextColumns.find(column => column?._id === oldColumn?._id)
           targetColumn.cards = arrayMove(targetColumn?.cards, oldCardIndex, newCardIndex)
           targetColumn.cardOrderIds = targetColumn?.cards?.map(card => card?._id)
-          moveCardInSameColumn(oldColumn?._id, targetColumn.cardOrderIds) // call API
+          moveCardInSameColumn(oldColumn?._id, targetColumn.cards) // call API
           return nextColumns
         })
       } else {
@@ -258,7 +254,7 @@ function BoardContent({
         const oldIndex = prevOrderedColumns.findIndex(column => column?._id === active?.id)
         const newIndex = prevOrderedColumns.findIndex(column => column?._id === over?.id)
         const nextOrderedColumns = arrayMove(prevOrderedColumns, oldIndex, newIndex)
-        moveColumns(nextOrderedColumns.map(column => column?._id)) // call API
+        moveColumns(nextOrderedColumns) // call API
         return nextOrderedColumns
       })
     }

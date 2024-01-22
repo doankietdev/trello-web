@@ -11,10 +11,12 @@ import {
   createNewColumnAPI,
   updateColumnAPI,
   deleteColumnAPI,
-  createNewCardAPI
+  createNewCardAPI,
+  moveCardToAnotherColumnAPI
 } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatter'
 import { mapOrder } from '~/utils/sorts'
+import { SUFFIX_PLACEHOLDER_CARD } from '~/utils/constants'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -37,19 +39,16 @@ function Board() {
   }, [])
 
   const createNewColumn = async (column) => {
-    const responseColumn = await createNewColumnAPI({
-      ...column,
-      boardId: board?._id
-    })
+    const responseColumn = await createNewColumnAPI({ ...column, boardId: board?._id })
 
-    const boardToUpdate = { ...board }
-    boardToUpdate.columns.push({
+    const newBoard = { ...board }
+    newBoard.columns.push({
       ...responseColumn,
       cards: [generatePlaceholderCard(board?._id, column?._id)],
       cardOrderIds: [generatePlaceholderCard(board?._id, column?._id)?._id]
     })
-    boardToUpdate.columnOrderIds.push(responseColumn?._id)
-    setBoard(boardToUpdate)
+    newBoard.columnOrderIds.push(responseColumn?._id)
+    setBoard(newBoard)
   }
 
   const createNewCard = async (card, columnId) => {
@@ -59,22 +58,71 @@ function Board() {
       columnId
     })
 
-    const boardToUpdate = { ...board }
-    const columnToUpdate = boardToUpdate?.columns?.find(column => column?._id === columnId)
-    if (columnToUpdate) {
-      columnToUpdate?.cards?.push(responseCard)
-      columnToUpdate?.cardOrderIds?.push(responseCard?._id)
+    const newBoard = { ...board }
+    const foundColumn = newBoard?.columns?.find(column => column?._id === columnId)
+    if (foundColumn) {
+      foundColumn?.cards?.push(responseCard)
+      foundColumn?.cardOrderIds?.push(responseCard?._id)
+      setBoard(newBoard)
     }
-    setBoard(boardToUpdate)
   }
 
-  // remember debug at here when bug drag column
-  const moveColumns = async (columnOrderIds) => {
+  const moveColumns = async (newColumns) => {
+    const columnOrderIds = newColumns.map(column => column?._id)
     await updateBoardAPI(board?._id, { columnOrderIds })
+
+    const newBoard = { ...board }
+    newBoard.columns = newColumns
+    newBoard.columnOrderIds = columnOrderIds
+    setBoard(newBoard)
   }
 
-  const moveCardInSameColumn = async (columnId, cardOrderIds) => {
+  const moveCardInSameColumn = async (columnId, newCards) => {
+    const cardOrderIds = newCards?.map(card => card?._id)
     await updateColumnAPI(columnId, { cardOrderIds })
+
+    const newBoard = { ...board }
+    const foundColumn = newBoard?.columns?.find(column => column?._id === columnId)
+    if (foundColumn) {
+      foundColumn.cards = newCards
+      foundColumn.cardOrderIds = cardOrderIds
+      setBoard(newBoard)
+    }
+  }
+
+  const moveCardInAnotherColumn = async ({
+    cardId,
+    prevColumnId,
+    newCardsOfPrevColumn,
+    nextColumnId,
+    newCardsOfNextColumn
+  }) => {
+    let cardOrderIdsOfPrevColumn = newCardsOfPrevColumn.map(card => card?._id)
+    const cardOrderIdsOfNextColumn = newCardsOfNextColumn.map(card => card?._id)
+    if (cardOrderIdsOfPrevColumn[0]?.includes(SUFFIX_PLACEHOLDER_CARD)) {
+      cardOrderIdsOfPrevColumn = []
+    }
+
+    await moveCardToAnotherColumnAPI({
+      cardId,
+      prevColumnId,
+      cardOrderIdsOfPrevColumn,
+      nextColumnId,
+      cardOrderIdsOfNextColumn
+    })
+
+    const newBoard = { ...board }
+    const prevColumn = newBoard?.columns?.find(column => column?._id === prevColumnId)
+    const nextColumn = newBoard?.columns?.find(column => column?._id === nextColumnId)
+    if (prevColumn) {
+      prevColumn.cards = newCardsOfPrevColumn
+      prevColumn.cardOrderIds = cardOrderIdsOfPrevColumn
+    }
+    if (nextColumn) {
+      nextColumn.cards = newCardsOfNextColumn
+      nextColumn.cardOrderIds = cardOrderIdsOfNextColumn
+    }
+    setBoard(newBoard)
   }
 
   const deleteColumn = async (columnId) => {
@@ -83,7 +131,6 @@ function Board() {
     const newBoard = { ...board }
     newBoard.columns = board?.columns?.filter(column => column?._id !== columnId)
     newBoard.columnOrderIds = board?.columnOrderIds?.filter(columnOrderId => columnOrderId !== columnId)
-    console.log(newBoard)
     setBoard(newBoard)
   }
 
@@ -113,6 +160,7 @@ function Board() {
         moveColumns={moveColumns}
         createNewCard={createNewCard}
         moveCardInSameColumn={moveCardInSameColumn}
+        moveCardInAnotherColumn={moveCardInAnotherColumn}
         deleteColumn={deleteColumn}
       />
     </Container>
