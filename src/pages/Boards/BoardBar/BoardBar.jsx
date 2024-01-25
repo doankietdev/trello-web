@@ -10,6 +10,8 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { useSelector } from 'react-redux'
+import { boardSelector } from '~/redux/selectors'
 import { capitalizeFirstLetter } from '~/utils/formatter'
 
 const menuStyles = {
@@ -20,7 +22,9 @@ const menuStyles = {
   '&.MuiChip-clickable:hover': { bgcolor: 'primary.light' }
 }
 
-function BoardBar({ board }) {
+function BoardBar() {
+  const { board } = useSelector(boardSelector)
+
   return (
     <Box sx={{
       width: '100%',

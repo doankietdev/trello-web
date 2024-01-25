@@ -10,11 +10,14 @@ import {
   horizontalListSortingStrategy
 } from '@dnd-kit/sortable'
 import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { addNewColumn } from '~/features/board/column/columnThunks'
 import Column from './Column/Column'
 
-function ComlumnsList({ columns, createNewColumn, createNewCard, deleteColumn }) {
+function ComlumnsList({ boardId, columns }) {
   const [isOpenAddListForm, setOpenAddListForm] = useState(false)
   const [columnTitleInput, setColumnTitleInput] = useState('')
+  const dispatch = useDispatch()
 
   const handleAddList = async () => {
     if (!columnTitleInput) {
@@ -22,13 +25,12 @@ function ComlumnsList({ columns, createNewColumn, createNewCard, deleteColumn })
       return
     }
 
-    const column = { title: columnTitleInput }
-    await createNewColumn(column)
+    dispatch(addNewColumn({ title: columnTitleInput, boardId }))
   }
 
   return (
     <SortableContext
-      items={columns?.map((column) => column._id)}
+      items={columns?.map((column) => column._id) || []}
       strategy={horizontalListSortingStrategy}
     >
       <Box
@@ -42,12 +44,7 @@ function ComlumnsList({ columns, createNewColumn, createNewCard, deleteColumn })
         }}
       >
         {columns?.map((column) => (
-          <Column
-            key={column._id}
-            column={column}
-            createNewCard={createNewCard}
-            deleteColumn={deleteColumn}
-          />
+          <Column key={column._id} column={column} />
         ))}
         {isOpenAddListForm ? (
           <Box

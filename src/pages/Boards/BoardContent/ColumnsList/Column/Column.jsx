@@ -18,9 +18,11 @@ import DragHandleIcon from '@mui/icons-material/DragHandle'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useConfirm } from 'material-ui-confirm'
+import { useDispatch } from 'react-redux'
+import { deleteColumn } from '~/features/board/column/columnThunks'
 import CardsList from './CardsList/CardsList'
 
-function Column({ column, createNewCard, deleteColumn }) {
+function Column({ column }) {
   const {
     attributes,
     listeners,
@@ -41,6 +43,7 @@ function Column({ column, createNewCard, deleteColumn }) {
   const open = Boolean(anchorEl)
 
   const confirmDialog = useConfirm()
+  const dispatch = useDispatch()
 
   const orderedCards = column?.cards
 
@@ -58,7 +61,7 @@ function Column({ column, createNewCard, deleteColumn }) {
       confirmationText: 'Confirm'
     })
       .then(() => {
-        deleteColumn(column?._id)
+        dispatch(deleteColumn({ columnId: column?._id }))
       })
       .catch(() => {})
   }
@@ -67,10 +70,10 @@ function Column({ column, createNewCard, deleteColumn }) {
     <Box
       ref={setNodeRef}
       style={dndColumnStyles}
-      {...listeners}
       {...attributes}
     >
       <Box
+        {...listeners}
         sx={{
           minWidth: '300px',
           maxWidth: '300px',
@@ -164,7 +167,6 @@ function Column({ column, createNewCard, deleteColumn }) {
           newCardForm={{ isOpenNewCardForm, setOpenNewCardForm }}
           cards={orderedCards}
           columnId={column?._id}
-          createNewCard={createNewCard}
         />
 
         {/* Box column footer */}

@@ -7,14 +7,20 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import CloseIcon from '@mui/icons-material/Close'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { boardSelector } from '~/redux/selectors'
+import { addNewCard } from '~/features/board/column/card/cardThunks'
 import Card from './Card/Card'
 
-function CardsList({ newCardForm, cards, columnId, createNewCard }) {
+function CardsList({ newCardForm, cards, columnId }) {
   const [cardTitleInput, setCardTitleInput] = useState('')
   const cardTitleFormElement = useRef()
   useEffect(() => {
     cardTitleFormElement.current?.scrollIntoView({ behavior: 'smooth' })
   }, [newCardForm])
+
+  const dispatch = useDispatch()
+  const { board } = useSelector(boardSelector)
 
   const handleEnterCardTitle = (event) => setCardTitleInput(event.target.value)
   const handleAddCard = async () => {
@@ -22,9 +28,11 @@ function CardsList({ newCardForm, cards, columnId, createNewCard }) {
       toast.error('Please enter card title')
       return
     }
-
-    const card = { title: cardTitleInput }
-    await createNewCard(card, columnId)
+    dispatch(addNewCard({
+      title: cardTitleInput,
+      columnId,
+      boardId: board?._id
+    }))
   }
 
   return (

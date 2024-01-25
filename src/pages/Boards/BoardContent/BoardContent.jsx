@@ -15,6 +15,13 @@ import {
 import { arrayMove } from '@dnd-kit/sortable'
 import { MouseSensor, TouchSensor } from '~/customLibraries/DndKitSensors'
 import { cloneDeep } from 'lodash'
+import { useSelector, useDispatch } from 'react-redux'
+import { boardSelector } from '~/redux/selectors'
+import { moveColumns } from '~/features/board/column/columnThunks'
+import {
+  moveCardInSameColumn,
+  moveCardInAnotherColumn
+} from '~/features/board/column/card/cardThunks'
 import ColumnsList from './ColumnsList/ColumnsList'
 import Column from './ColumnsList/Column/Column'
 import Card from './ColumnsList/Column/CardsList/Card/Card'
@@ -26,15 +33,10 @@ const activeDragItemTypes = {
   card: 'card'
 }
 
-function BoardContent({
-  board,
-  createNewColumn,
-  moveColumns,
-  createNewCard,
-  moveCardInSameColumn,
-  moveCardInAnotherColumn,
-  deleteColumn
-}) {
+function BoardContent() {
+  const { board } = useSelector(boardSelector)
+  const dispatch = useDispatch()
+
   const dropAnimation = {
     sideEffects: defaultDropAnimationSideEffects({
       styles: { active: { opacity: '0.5' }
@@ -119,13 +121,13 @@ function BoardContent({
       }
 
       if (triggerFrom === 'handleDragEnd') {
-        moveCardInAnotherColumn({
+        dispatch( moveCardInAnotherColumn({
           cardId: activeDraggingCard?._id,
           prevColumnId: nextOldColumn?._id,
           newCardsOfPrevColumn: nextOldColumn?.cards,
           nextColumnId: nextOverColumn?._id,
           newCardsOfNextColumn: nextOverColumn?.cards
-        })
+        }))
       }
 
       return nextColumns
@@ -231,7 +233,10 @@ function BoardContent({
           const targetColumn = nextColumns.find(column => column?._id === oldColumn?._id)
           targetColumn.cards = arrayMove(targetColumn?.cards, oldCardIndex, newCardIndex)
           targetColumn.cardOrderIds = targetColumn?.cards?.map(card => card?._id)
-          moveCardInSameColumn(oldColumn?._id, targetColumn.cards) // call API
+          dispatch(moveCardInSameColumn({
+            columnId: oldColumn?._id,
+            newCards: targetColumn.cards
+          }))
           return nextColumns
         })
       } else {
@@ -254,7 +259,7 @@ function BoardContent({
         const oldIndex = prevOrderedColumns.findIndex(column => column?._id === active?.id)
         const newIndex = prevOrderedColumns.findIndex(column => column?._id === over?.id)
         const nextOrderedColumns = arrayMove(prevOrderedColumns, oldIndex, newIndex)
-        moveColumns(nextOrderedColumns) // call API
+        dispatch(moveColumns({ boardId: board?._id, newColumns: nextOrderedColumns }))
         return nextOrderedColumns
       })
     }
@@ -280,10 +285,8 @@ function BoardContent({
         }}
       >
         <ColumnsList
+          boardId={board?._id}
           columns={orderedColumns}
-          createNewColumn={createNewColumn}
-          createNewCard={createNewCard}
-          deleteColumn={deleteColumn}
         />
         <DragOverlay dropAnimation={dropAnimation} >
           {(!activeDragItemType) && null}
