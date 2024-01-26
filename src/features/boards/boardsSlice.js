@@ -1,6 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchBoardDetailsFulfilledReducer, fetchBoardsFulfilledReducer } from './boardsReducers'
-import { fetchBoardDetails, fetchBoards } from './boardsThunks'
+import {
+  createNewBoardFulfilledReducer,
+  fetchBoardDetailsFulfilledReducer,
+  fetchBoardsFulfilledReducer
+} from './boardsReducers'
+import {
+  createNewBoard,
+  fetchBoardDetails,
+  fetchBoards
+} from './boardsThunks'
 import {
   pendingReducer,
   addNewColumnFulfilledReducer,
@@ -30,6 +38,8 @@ const boardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(createNewBoard.pending, pendingReducer)
+      .addCase(createNewBoard.fulfilled, createNewBoardFulfilledReducer)
       .addCase(fetchBoards.pending, pendingReducer)
       .addCase(fetchBoards.fulfilled, fetchBoardsFulfilledReducer)
       .addCase(fetchBoardDetails.pending, pendingReducer)

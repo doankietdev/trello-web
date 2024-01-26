@@ -1,6 +1,11 @@
 import axios from 'axios'
 import { API_ROOT } from '~/utils/constants'
 
+export const createNewBoardAPI = async (board) => {
+  const response = await axios.post(`${API_ROOT}/v1/boards`, board)
+  return response.data?.metadata?.board
+}
+
 export const fetchBoardsAPI = async () => {
   const response = await axios.get(`${API_ROOT}/v1/boards`)
   return response.data?.metadata?.boards
