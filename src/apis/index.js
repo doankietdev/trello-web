@@ -39,6 +39,11 @@ export const moveCardToAnotherColumnAPI = async ({
   return response.data?.metadata
 }
 
+export const deleteCardAPI = async (cardId) => {
+  const response = await axios.delete(`${API_ROOT}/v1/cards/${cardId}`)
+  return response.data?.metadata
+}
+
 export const deleteColumnAPI = async (columnId) => {
   const response = await axios.delete(`${API_ROOT}/v1/columns/${columnId}`)
   return response.data?.metadata
