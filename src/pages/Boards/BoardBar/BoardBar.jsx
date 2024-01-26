@@ -22,7 +22,7 @@ const menuStyles = {
   '&.MuiChip-clickable:hover': { bgcolor: 'primary.light' }
 }
 
-function BoardBar() {
+function BoardBar({ sx }) {
   const currentBoard = useSelector(currentBoardSelector)
 
   return (
@@ -33,10 +33,11 @@ function BoardBar() {
       alignItems: 'center',
       justifyContent: 'space-between',
       gap: 2,
-      paddingX: 2,
+      px: 2,
       overflowX: 'auto',
       bgcolor: 'primary.dark',
-      '&::-webkit-scrollbar-track': { m: '10px' }
+      '&::-webkit-scrollbar-track': { m: '10px' },
+      ...sx
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Chip

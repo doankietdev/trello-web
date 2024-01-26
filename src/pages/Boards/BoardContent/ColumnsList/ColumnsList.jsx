@@ -40,6 +40,8 @@ function ComlumnsList({ boardId, columns }) {
           height: '100%',
           display: 'flex',
           overflowX: 'auto',
+          px: 1,
+          pt: 1.6,
           '&::-webkit-scrollbar-track': { m: '10px' }
         }}
       >

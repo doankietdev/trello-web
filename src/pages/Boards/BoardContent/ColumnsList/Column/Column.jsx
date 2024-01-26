@@ -194,7 +194,7 @@ function Column({ column }) {
             >
               Add new card
             </Button>
-            <Tooltip title="Drag to move">
+            {/* <Tooltip title="Drag to move">
               <Button
                 sx={{
                   maxWidth: '42px',
@@ -205,7 +205,7 @@ function Column({ column }) {
               >
                 <DragHandleIcon sx={{ cursor: 'pointer' }} />
               </Button>
-            </Tooltip>
+            </Tooltip> */}
           </Box>
         )}
       </Box>

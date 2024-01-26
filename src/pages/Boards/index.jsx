@@ -19,7 +19,7 @@ function Boards() {
   // }
 
   return (
-    <Grid container spacing={3} sx={{ px: 4, pt: 4 }}>
+    <Grid container spacing={3}>
       <Grid item lg={2}>
         <BoardsBar />
       </Grid>

@@ -15,7 +15,8 @@ function AddBoardForm({
   onTitleChange,
   onVisibilityChange,
   onAdd,
-  onCancel
+  onCancel,
+  sx
 }) {
   const buttonStyles = {
     color: 'text.secondary',
@@ -29,9 +30,10 @@ function AddBoardForm({
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        bgcolor: 'primary.dark',
         borderRadius: '10px',
-        padding: 2
+        padding: 2,
+        bgcolor: 'primary.dark',
+        ...sx
       }}
     >
       <Typography

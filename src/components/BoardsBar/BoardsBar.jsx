@@ -42,7 +42,10 @@ function BoardsBar() {
   }
 
   return (
-    <Box>
+    <Box sx={{
+      position: 'fixed',
+      overflowX: 'hidden'
+    }}>
       {isOpenForm ? (
         <AddBoardForm
           title={title}

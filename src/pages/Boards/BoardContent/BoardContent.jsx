@@ -281,7 +281,7 @@ function BoardContent() {
           bgcolor: 'primary.main',
           width: '100%',
           height: (theme) => theme.trello.boardContentHeight,
-          p: '10px 0'
+          pb: '6px'
         }}
       >
         <ColumnsList

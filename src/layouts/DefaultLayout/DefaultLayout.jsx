@@ -1,21 +1,19 @@
 import Container from '@mui/material/Container'
-import Divider from '@mui/material/Divider'
+import Box from '@mui/material/Box'
 import AppBar from '~/components/AppBar/AppBar'
 
 function DefaultLayout({ children }) {
   return (
-    <Container
-      disableGutters
-      maxWidth={false}
+    <Box
       sx={{
         height: '100vh',
+        overflow: 'auto',
         bgcolor: 'primary.main'
       }}
     >
-      <AppBar />
-      <Divider sx={{ bgcolor: 'text.secondary' }} />
+      <AppBar sx={{ px: 2 }} />
       {children}
-    </Container>
+    </Box>
   )
 }
 

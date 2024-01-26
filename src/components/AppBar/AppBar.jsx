@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react'
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import AppsIcon from '@mui/icons-material/Apps'
 import SvgIcon from '@mui/material/SvgIcon'
@@ -20,29 +20,33 @@ import Recent from './Menus/Recent'
 import Starred from './Menus/Starred'
 import Templates from './Menus/Templates'
 import Profile from './Menus/Profile'
+import { default as MuiAppBar } from '@mui/material/AppBar'
 
-function AppBar() {
+function AppBar({ sx }) {
   const [searchValue, setSearchValue] = useState('')
 
   return (
-    <Box
+    <MuiAppBar
+      position="sticky"
       sx={{
         width: '100%',
         height: (theme) => theme.trello.appBarHeight,
         display: 'flex',
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 2,
-        px: 2,
         overflowX: 'auto',
         bgcolor: 'primary.main',
-        '&::-webkit-scrollbar-track': { m: '10px' }
+        '&::-webkit-scrollbar-track': { m: '10px' },
+        ...sx
       }}
     >
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <Button sx={{ color: 'text.secondary', px: 2, maxWidth: '40px', minWidth: '40px' }}>
           <AppsIcon />
         </Button>
+
         <Button
           startIcon={
             <SvgIcon
@@ -153,7 +157,7 @@ function AppBar() {
           <Profile />
         </Tooltip>
       </Box>
-    </Box>
+    </MuiAppBar>
   )
 }
 
