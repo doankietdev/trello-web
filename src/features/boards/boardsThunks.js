@@ -1,5 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { fetchBoardsAPI, fetchBoardDetailsAPI, createNewBoardAPI } from '~/apis'
+import {
+  fetchBoardsAPI,
+  deleteBoardAPI,
+  fetchBoardDetailsAPI,
+  createNewBoardAPI
+} from '~/apis'
 
 export const createNewBoard = createAsyncThunk('/board/createNewBoard', async (board) => {
   try {
@@ -9,6 +14,14 @@ export const createNewBoard = createAsyncThunk('/board/createNewBoard', async (b
   }
 })
 
+export const deleteBoard = createAsyncThunk('/board/deleteBoard', async (boardId) => {
+  try {
+    await deleteBoardAPI(boardId)
+    return { boardId }
+  } catch (error) {
+    console.log(error.message)
+  }
+})
 
 export const fetchBoards = createAsyncThunk('/board/fetchBoards', async () => {
   try {

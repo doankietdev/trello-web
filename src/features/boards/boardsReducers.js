@@ -2,8 +2,11 @@ import { generatePlaceholderCard } from '~/utils/formatter'
 import { mapOrder } from '~/utils/sorts'
 
 export const createNewBoardFulfilledReducer = (state, action) => {
-  console.log('action.payload', action.payload);
   state.boards.push(action.payload)
+}
+
+export const deleteBoardFulfilledReducer = (state, action) => {
+  state.boards = state.boards.filter(board => board?._id !== action.payload?.boardId)
 }
 
 export const fetchBoardsFulfilledReducer = (state, action) => {

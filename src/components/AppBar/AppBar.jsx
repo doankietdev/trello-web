@@ -76,7 +76,7 @@ function AppBar({ sx }) {
           <Starred />
           <Templates />
           <Button variant="outlined" startIcon={<AddToPhotosIcon />}>
-            Create
+            Add board
           </Button>
         </Box>
       </Box>

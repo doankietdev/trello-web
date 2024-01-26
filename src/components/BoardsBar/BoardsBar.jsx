@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import AddBoxIcon from '@mui/icons-material/AddBox'
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 import { useDispatch } from 'react-redux'
 import { createNewBoard } from '~/features/boards/boardsThunks'
 import AddBoardForm from '~/components/AddBoardForm/AddBoardForm'
@@ -66,10 +66,10 @@ function BoardsBar() {
         >
           <Button
             onClick={handleOpenForm}
-            startIcon={<AddBoxIcon />}
+            startIcon={<AddToPhotosIcon />}
             sx={buttonStyles}
           >
-            Add new board
+            Add board
           </Button>
           <Button sx={buttonStyles}>
             Contained

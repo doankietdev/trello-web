@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   createNewBoardFulfilledReducer,
+  deleteBoardFulfilledReducer,
   fetchBoardDetailsFulfilledReducer,
   fetchBoardsFulfilledReducer
 } from './boardsReducers'
 import {
   createNewBoard,
+  deleteBoard,
   fetchBoardDetails,
   fetchBoards
 } from './boardsThunks'
@@ -40,6 +42,8 @@ const boardSlice = createSlice({
     builder
       .addCase(createNewBoard.pending, pendingReducer)
       .addCase(createNewBoard.fulfilled, createNewBoardFulfilledReducer)
+      .addCase(deleteBoard.pending, pendingReducer)
+      .addCase(deleteBoard.fulfilled, deleteBoardFulfilledReducer)
       .addCase(fetchBoards.pending, pendingReducer)
       .addCase(fetchBoards.fulfilled, fetchBoardsFulfilledReducer)
       .addCase(fetchBoardDetails.pending, pendingReducer)

@@ -40,7 +40,7 @@ function AddBoardForm({
         variant="h6"
         sx={{ color: 'text.secondary', textAlign: 'center', mb: 1 }}
       >
-        Add new board
+        Add Board
       </Typography>
       <TextField
         autoFocus

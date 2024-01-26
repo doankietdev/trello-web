@@ -6,6 +6,11 @@ export const createNewBoardAPI = async (board) => {
   return response.data?.metadata?.board
 }
 
+export const deleteBoardAPI = async (boardId) => {
+  const response = await axios.delete(`${API_ROOT}/v1/boards/${boardId}`)
+  return response.data?.metadata?.board
+}
+
 export const fetchBoardsAPI = async () => {
   const response = await axios.get(`${API_ROOT}/v1/boards`)
   return response.data?.metadata?.boards
