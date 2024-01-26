@@ -8,8 +8,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
-import { boardSelector } from '~/redux/selectors'
-import { addNewCard } from '~/features/board/column/card/cardThunks'
+import { currentBoardSelector } from '~/redux/selectors'
+import { addNewCard } from '~/features/boards/column/card/cardThunks'
 import Card from './Card/Card'
 
 function CardsList({ newCardForm, cards, columnId }) {
@@ -20,7 +20,7 @@ function CardsList({ newCardForm, cards, columnId }) {
   }, [newCardForm])
 
   const dispatch = useDispatch()
-  const { board } = useSelector(boardSelector)
+  const currentBoard = useSelector(currentBoardSelector)
 
   const handleEnterCardTitle = (event) => setCardTitleInput(event.target.value)
   const handleAddCard = async () => {
@@ -31,7 +31,7 @@ function CardsList({ newCardForm, cards, columnId }) {
     dispatch(addNewCard({
       title: cardTitleInput,
       columnId,
-      boardId: board?._id
+      boardId: currentBoard?._id
     }))
   }
 

@@ -16,12 +16,12 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { MouseSensor, TouchSensor } from '~/customLibraries/DndKitSensors'
 import { cloneDeep } from 'lodash'
 import { useSelector, useDispatch } from 'react-redux'
-import { boardSelector } from '~/redux/selectors'
-import { moveColumns } from '~/features/board/column/columnThunks'
+import { currentBoardSelector } from '~/redux/selectors'
+import { moveColumns } from '~/features/boards/column/columnThunks'
 import {
   moveCardInSameColumn,
   moveCardInAnotherColumn
-} from '~/features/board/column/card/cardThunks'
+} from '~/features/boards/column/card/cardThunks'
 import ColumnsList from './ColumnsList/ColumnsList'
 import Column from './ColumnsList/Column/Column'
 import Card from './ColumnsList/Column/CardsList/Card/Card'
@@ -34,7 +34,7 @@ const activeDragItemTypes = {
 }
 
 function BoardContent() {
-  const { board } = useSelector(boardSelector)
+  const currentBoard = useSelector(currentBoardSelector)
   const dispatch = useDispatch()
 
   const dropAnimation = {
@@ -46,8 +46,8 @@ function BoardContent() {
 
   const [orderedColumns, setOrderedColumns] = useState([])
   useEffect(() => {
-    setOrderedColumns(board?.columns)
-  }, [board])
+    setOrderedColumns(currentBoard?.columns)
+  }, [currentBoard])
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: { distance: 10 }
@@ -102,7 +102,7 @@ function BoardContent() {
         nextOldColumn.cards = oldColumn?.cards?.filter(card => card?._id !== activeDraggingCardId)
 
         if (!nextOldColumn.cards?.length) {
-          nextOldColumn.cards = [generatePlaceholderCard(board?._id, oldColumn?._id)]
+          nextOldColumn.cards = [generatePlaceholderCard(currentBoard?._id, oldColumn?._id)]
         }
 
         nextOldColumn.cardOrderIds = nextOldColumn?.cards?.map(card => card?._id)
@@ -259,7 +259,7 @@ function BoardContent() {
         const oldIndex = prevOrderedColumns.findIndex(column => column?._id === active?.id)
         const newIndex = prevOrderedColumns.findIndex(column => column?._id === over?.id)
         const nextOrderedColumns = arrayMove(prevOrderedColumns, oldIndex, newIndex)
-        dispatch(moveColumns({ boardId: board?._id, newColumns: nextOrderedColumns }))
+        dispatch(moveColumns({ boardId: currentBoard?._id, newColumns: nextOrderedColumns }))
         return nextOrderedColumns
       })
     }
@@ -285,7 +285,7 @@ function BoardContent() {
         }}
       >
         <ColumnsList
-          boardId={board?._id}
+          boardId={currentBoard?._id}
           columns={orderedColumns}
         />
         <DragOverlay dropAnimation={dropAnimation} >

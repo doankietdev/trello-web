@@ -1,7 +1,7 @@
 import { mapOrder } from '~/utils/sorts'
 
 export const addNewCardFulfilledReducer = (state, action) => {
-  const foundColumn = state.board?.columns?.find(column =>
+  const foundColumn = state.currentBoard?.columns?.find(column =>
     column?._id === action.payload?.columnId
   )
   if (foundColumn) {
@@ -11,7 +11,7 @@ export const addNewCardFulfilledReducer = (state, action) => {
 }
 
 export const moveCardInSameColumnFulfilledReducer = (state, action) => {
-  const foundColumn = state.board?.columns?.find(
+  const foundColumn = state.currentBoard?.columns?.find(
     column => column?._id === action.payload?._id
   )
 
@@ -29,8 +29,8 @@ export const moveCardInAnotherColumnFulfilledReducer = (state, action) => {
     newCardsOfNextColumn = []
   } = action.payload
 
-  const prevColumn = state.board?.columns?.find(column => column?._id === prevColumnId)
-  const nextColumn = state.board?.columns?.find(column => column?._id === nextColumnId)
+  const prevColumn = state.currentBoard?.columns?.find(column => column?._id === prevColumnId)
+  const nextColumn = state.currentBoard?.columns?.find(column => column?._id === nextColumnId)
   if (prevColumn) {
     prevColumn.cards = newCardsOfPrevColumn
     prevColumn.cardOrderIds = newCardsOfPrevColumn?.map(card => card?._id)
@@ -42,7 +42,7 @@ export const moveCardInAnotherColumnFulfilledReducer = (state, action) => {
 }
 
 export const deleteCardFulfilledReducer = (state, action) => {
-  const foundColumn = state.board?.columns?.find(column => column?._id === action.payload?.columnId)
+  const foundColumn = state.currentBoard?.columns?.find(column => column?._id === action.payload?.columnId)
   if (foundColumn) {
     foundColumn.cards = foundColumn.cards?.filter(card => card?._id !== action.payload?._id)
     foundColumn.cardOrderIds = foundColumn.cardOrderIds?.filter(cardId => cardId !== action.payload?._id)

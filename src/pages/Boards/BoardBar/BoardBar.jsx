@@ -11,7 +11,7 @@ import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { useSelector } from 'react-redux'
-import { boardSelector } from '~/redux/selectors'
+import { currentBoardSelector } from '~/redux/selectors'
 import { capitalizeFirstLetter } from '~/utils/formatter'
 
 const menuStyles = {
@@ -23,7 +23,7 @@ const menuStyles = {
 }
 
 function BoardBar() {
-  const { board } = useSelector(boardSelector)
+  const currentBoard = useSelector(currentBoardSelector)
 
   return (
     <Box sx={{
@@ -41,14 +41,14 @@ function BoardBar() {
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Chip
           icon={<DashboardIcon />}
-          label={board?.title}
+          label={currentBoard?.title}
           clickable
           sx={menuStyles}
         />
 
         <Chip
           icon={<VpnLockIcon />}
-          label={capitalizeFirstLetter(board?.type)}
+          label={capitalizeFirstLetter(currentBoard?.type)}
           clickable
           sx={menuStyles}
         />
