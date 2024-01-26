@@ -1,6 +1,11 @@
 import { generatePlaceholderCard } from '~/utils/formatter'
 import { mapOrder } from '~/utils/sorts'
 
+export const createNewBoardFulfilledReducer = (state, action) => {
+  console.log('action.payload', action.payload);
+  state.boards.push(action.payload)
+}
+
 export const fetchBoardsFulfilledReducer = (state, action) => {
   state.boards = action.payload
 }
