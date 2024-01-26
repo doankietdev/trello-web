@@ -12,7 +12,7 @@ import Button from '@mui/material/Button'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useDispatch } from 'react-redux'
-import { deleteCard } from '~/features/board/column/card/cardThunks'
+import { deleteCard } from '~/features/boards/column/card/cardThunks'
 
 function Card({ card }) {
   const {

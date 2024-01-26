@@ -1,8 +1,7 @@
-
-export const boardSelector = (state) => {
-  return state.board
+export const currentBoardSelector = (state) => {
+  return state.boards.currentBoard
 }
 
-export const columnSelector = (state) => {
-  return state.board
+export const boardsSelector = (state) => {
+  return state.boards.boards
 }

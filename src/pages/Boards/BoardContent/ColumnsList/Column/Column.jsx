@@ -19,7 +19,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { useConfirm } from 'material-ui-confirm'
 import { useDispatch } from 'react-redux'
-import { deleteColumn } from '~/features/board/column/columnThunks'
+import { deleteColumn } from '~/features/boards/column/columnThunks'
 import CardsList from './CardsList/CardsList'
 
 function Column({ column }) {

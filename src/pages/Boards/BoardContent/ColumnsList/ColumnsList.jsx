@@ -11,7 +11,7 @@ import {
 } from '@dnd-kit/sortable'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
-import { addNewColumn } from '~/features/board/column/columnThunks'
+import { addNewColumn } from '~/features/boards/column/columnThunks'
 import Column from './Column/Column'
 
 function ComlumnsList({ boardId, columns }) {
