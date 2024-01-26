@@ -1,5 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { createNewCardAPI, updateColumnAPI, moveCardToAnotherColumnAPI } from '~/apis'
+import {
+  createNewCardAPI,
+  updateColumnAPI,
+  moveCardToAnotherColumnAPI,
+  deleteCardAPI
+} from '~/apis'
 import { SUFFIX_PLACEHOLDER_CARD } from '~/utils/constants'
 
 export const addNewCard = createAsyncThunk('board/addNewCard', async ({
@@ -46,4 +51,9 @@ export const moveCardInAnotherColumn = createAsyncThunk('board/moveCardInAnother
     nextColumnId,
     newCardsOfNextColumn
   }
+})
+
+export const deleteCard = createAsyncThunk('board/deleteCard', async (card) => {
+  await deleteCardAPI(card?._id)
+  return card
 })

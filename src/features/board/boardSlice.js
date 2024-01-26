@@ -11,12 +11,14 @@ import { addNewColumn, deleteColumn, moveColumns } from './column/columnThunks'
 import {
   addNewCard,
   moveCardInSameColumn,
-  moveCardInAnotherColumn
+  moveCardInAnotherColumn,
+  deleteCard
 } from './column/card/cardThunks'
 import {
   addNewCardFulfilledReducer,
   moveCardInSameColumnFulfilledReducer,
-  moveCardInAnotherColumnFulfilledReducer
+  moveCardInAnotherColumnFulfilledReducer,
+  deleteCardFulfilledReducer
 } from './column/card/cardReducers'
 
 const boardSlice = createSlice({
@@ -43,6 +45,8 @@ const boardSlice = createSlice({
       .addCase(moveCardInSameColumn.fulfilled, moveCardInSameColumnFulfilledReducer)
       .addCase(moveCardInAnotherColumn.pending, pendingReducer)
       .addCase(moveCardInAnotherColumn.fulfilled, moveCardInAnotherColumnFulfilledReducer)
+      .addCase(deleteCard.pending, pendingReducer)
+      .addCase(deleteCard.fulfilled, deleteCardFulfilledReducer)
   }
 })
 

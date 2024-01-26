@@ -40,3 +40,11 @@ export const moveCardInAnotherColumnFulfilledReducer = (state, action) => {
     nextColumn.cardOrderIds = newCardsOfNextColumn?.map(card => card?._id)
   }
 }
+
+export const deleteCardFulfilledReducer = (state, action) => {
+  const foundColumn = state.board?.columns?.find(column => column?._id === action.payload?.columnId)
+  if (foundColumn) {
+    foundColumn.cards = foundColumn.cards?.filter(card => card?._id !== action.payload?._id)
+    foundColumn.cardOrderIds = foundColumn.cardOrderIds?.filter(cardId => cardId !== action.payload?._id)
+  }
+}
