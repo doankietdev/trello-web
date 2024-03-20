@@ -1,6 +1,6 @@
 const routesConfig = {
-  boards: () => '/boards',
-  board: (boardId) => boardId ? `/boards/${boardId}` : '/boards/:boardId'
+  boards: () => '/',
+  board: (boardId) => (boardId ? `/${boardId}` : '/:boardId')
 }
 
 export default routesConfig
