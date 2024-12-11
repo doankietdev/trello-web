@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_ROOT } from '~/utils/constants'
+import { API_ROOT } from '~/configs/environment'
 
 export const createNewBoardAPI = async (board) => {
   const response = await axios.post(`${API_ROOT}/v1/boards`, board)
@@ -41,7 +41,7 @@ export const moveCardToAnotherColumnAPI = async ({
   prevColumnId,
   cardOrderIdsOfPrevColumn,
   nextColumnId,
-  cardOrderIdsOfNextColumn,
+  cardOrderIdsOfNextColumn
 }) => {
   const response = await axios.patch(`${API_ROOT}/v1/columns/move-card-to-another-column`, {
     cardId,
