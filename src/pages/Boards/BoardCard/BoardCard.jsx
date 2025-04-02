@@ -7,14 +7,14 @@ import Button from '@mui/material/Button'
 import CloseIcon from '@mui/icons-material/Close'
 import { useDispatch } from 'react-redux'
 import { deleteBoard } from '~/features/boards/boardsThunks'
-import configs from '~/configs'
+import paths from '~/routes/paths'
 
 export default function BoardCard({ board }) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const handleNavigate = () => {
-    navigate(configs.routes.board(board?._id))
+    navigate(paths.board(board?._id))
   }
 
   const handleDeleteBoard = (e) => {

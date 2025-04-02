@@ -10,14 +10,13 @@ import {
   horizontalListSortingStrategy
 } from '@dnd-kit/sortable'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
 import { addNewColumn } from '~/features/boards/column/columnThunks'
 import Column from './Column/Column'
+import { dispatch } from '~/redux/store'
 
 function ComlumnsList({ boardId, columns }) {
   const [isOpenAddListForm, setOpenAddListForm] = useState(false)
   const [columnTitleInput, setColumnTitleInput] = useState('')
-  const dispatch = useDispatch()
 
   const handleAddList = async () => {
     if (!columnTitleInput) {
@@ -25,7 +24,13 @@ function ComlumnsList({ boardId, columns }) {
       return
     }
 
-    dispatch(addNewColumn({ title: columnTitleInput, boardId }))
+    await toast.promise(dispatch(addNewColumn({ title: columnTitleInput, boardId })).unwrap(), {
+      pending: 'Adding list...',
+      success: 'Add list successfully',
+      error: 'Add list failed'
+    })
+    setColumnTitleInput('')
+    setOpenAddListForm(false)
   }
 
   return (

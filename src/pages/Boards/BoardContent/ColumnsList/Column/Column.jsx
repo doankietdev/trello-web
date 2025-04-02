@@ -1,26 +1,27 @@
-import { useState } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import Divider from '@mui/material/Divider'
-import ListItemText from '@mui/material/ListItemText'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import Cloud from '@mui/icons-material/Cloud'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import Tooltip from '@mui/material/Tooltip'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import ContentCopy from '@mui/icons-material/ContentCopy'
-import ContentPaste from '@mui/icons-material/ContentPaste'
-import AddCardIcon from '@mui/icons-material/AddCard'
-import Button from '@mui/material/Button'
-import DragHandleIcon from '@mui/icons-material/DragHandle'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import AddCardIcon from '@mui/icons-material/AddCard'
+import Cloud from '@mui/icons-material/Cloud'
+import ContentCopy from '@mui/icons-material/ContentCopy'
+import ContentPaste from '@mui/icons-material/ContentPaste'
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Divider from '@mui/material/Divider'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Tooltip from '@mui/material/Tooltip'
+import Typography from '@mui/material/Typography'
 import { useConfirm } from 'material-ui-confirm'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { deleteColumn } from '~/features/boards/column/columnThunks'
 import CardsList from './CardsList/CardsList'
+import { toast } from 'react-toastify'
+import { dispatch } from '~/redux/store'
 
 function Column({ column }) {
   const {
@@ -43,7 +44,6 @@ function Column({ column }) {
   const open = Boolean(anchorEl)
 
   const confirmDialog = useConfirm()
-  const dispatch = useDispatch()
 
   const orderedCards = column?.cards
 
@@ -54,20 +54,28 @@ function Column({ column }) {
     setAnchorEl(null)
   }
 
-  const handleDeleteList = () => {
-    confirmDialog({
+  const handleDeleteList = async () => {
+    await confirmDialog({
       title: 'Are you sure?',
       description: 'This action will permanently delete list and its cards! Are you sure?',
       confirmationText: 'Confirm'
     })
-      .then(() => {
-        dispatch(deleteColumn({ columnId: column?._id }))
-      })
-      .catch(() => {})
+    await toast.promise(dispatch(deleteColumn({ columnId: column?._id })).unwrap(), {
+      pending: 'Deleting list...',
+      success: 'Delete list successfully',
+      error: 'Delete list failed'
+    })
+  }
+
+  const handleAddCardSuccess = () => {
+    setOpenNewCardForm(false)
   }
 
   return (
     <Box
+      sx={{
+        cursor: 'pointer'
+      }}
       ref={setNodeRef}
       style={dndColumnStyles}
       {...attributes}
@@ -167,6 +175,7 @@ function Column({ column }) {
           newCardForm={{ isOpenNewCardForm, setOpenNewCardForm }}
           cards={orderedCards}
           columnId={column?._id}
+          onAddCardSuccess={handleAddCardSuccess}
         />
 
         {/* Box column footer */}
@@ -194,18 +203,6 @@ function Column({ column }) {
             >
               Add new card
             </Button>
-            {/* <Tooltip title="Drag to move">
-              <Button
-                sx={{
-                  maxWidth: '42px',
-                  minWidth: '42px',
-                  color: (theme) =>
-                    theme.palette.mode === 'dark' && theme.palette.text.primary
-                }}
-              >
-                <DragHandleIcon sx={{ cursor: 'pointer' }} />
-              </Button>
-            </Tooltip> */}
           </Box>
         )}
       </Box>

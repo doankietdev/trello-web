@@ -1,8 +1,8 @@
-import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
+import { Outlet } from 'react-router-dom'
 import AppBar from '~/components/AppBar/AppBar'
 
-function DefaultLayout({ children }) {
+function DefaultLayout() {
   return (
     <Box
       sx={{
@@ -12,7 +12,7 @@ function DefaultLayout({ children }) {
       }}
     >
       <AppBar sx={{ px: 2 }} />
-      {children}
+      <Outlet />
     </Box>
   )
 }

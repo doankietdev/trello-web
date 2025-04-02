@@ -121,7 +121,7 @@ function BoardContent() {
       }
 
       if (triggerFrom === 'handleDragEnd') {
-        dispatch( moveCardInAnotherColumn({
+        dispatch(moveCardInAnotherColumn({
           cardId: activeDraggingCard?._id,
           prevColumnId: nextOldColumn?._id,
           newCardsOfPrevColumn: nextOldColumn?.cards,

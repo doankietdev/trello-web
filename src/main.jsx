@@ -46,7 +46,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <App />
           </Router>
         </ReduxProvider>
-        <ToastContainer draggable theme="colored" />
+        <ToastContainer draggable theme="colored" position='bottom-right' />
       </ConfirmProvider>
     </CssVarsProvider>
   </React.StrictMode>

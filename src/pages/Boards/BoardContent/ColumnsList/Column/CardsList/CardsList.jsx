@@ -1,25 +1,25 @@
-import { useEffect, useRef, useState } from 'react'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import InputAdornment from '@mui/material/InputAdornment'
-import Button from '@mui/material/Button'
-import NoteAddIcon from '@mui/icons-material/NoteAdd'
-import CloseIcon from '@mui/icons-material/Close'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import CloseIcon from '@mui/icons-material/Close'
+import NoteAddIcon from '@mui/icons-material/NoteAdd'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import InputAdornment from '@mui/material/InputAdornment'
+import TextField from '@mui/material/TextField'
+import { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useDispatch, useSelector } from 'react-redux'
-import { currentBoardSelector } from '~/redux/selectors'
 import { addNewCard } from '~/features/boards/column/card/cardThunks'
+import { currentBoardSelector } from '~/redux/selectors'
+import { dispatch } from '~/redux/store'
 import Card from './Card/Card'
 
-function CardsList({ newCardForm, cards, columnId }) {
+function CardsList({ newCardForm, cards, columnId, onAddCardSuccess = () => {} }) {
   const [cardTitleInput, setCardTitleInput] = useState('')
   const cardTitleFormElement = useRef()
   useEffect(() => {
     cardTitleFormElement.current?.scrollIntoView({ behavior: 'smooth' })
   }, [newCardForm])
 
-  const dispatch = useDispatch()
   const currentBoard = useSelector(currentBoardSelector)
 
   const handleEnterCardTitle = (event) => setCardTitleInput(event.target.value)
@@ -28,11 +28,17 @@ function CardsList({ newCardForm, cards, columnId }) {
       toast.error('Please enter card title')
       return
     }
-    dispatch(addNewCard({
+    await toast.promise(dispatch(addNewCard({
       title: cardTitleInput,
       columnId,
       boardId: currentBoard?._id
-    }))
+    })).unwrap(), {
+      pending: 'Adding new card...',
+      success: 'Add new card successfully',
+      error: 'Add new card failed'
+    })
+    setCardTitleInput('')
+    onAddCardSuccess()
   }
 
   return (
