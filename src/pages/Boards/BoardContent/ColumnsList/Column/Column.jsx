@@ -17,11 +17,10 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 import { useConfirm } from 'material-ui-confirm'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { deleteColumn } from '~/features/boards/column/columnThunks'
-import CardsList from './CardsList/CardsList'
 import { toast } from 'react-toastify'
+import { deleteColumn } from '~/features/boards/column/columnThunks'
 import { dispatch } from '~/redux/store'
+import CardsList from './CardsList/CardsList'
 
 function Column({ column }) {
   const {

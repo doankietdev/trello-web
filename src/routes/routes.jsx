@@ -3,6 +3,8 @@ import Boards from '~/pages/Boards'
 import Board from '~/pages/Boards/_id'
 import paths from './paths'
 import DefaultLayout from '~/layouts'
+import PageNotFound from '~/pages/PageNotFound/PageNotFound'
+import Auth from '~/pages/Auth/Auth'
 
 export default function Routes() {
   return useRoutes([
@@ -19,6 +21,18 @@ export default function Routes() {
           element: <Board />
         }
       ]
+    },
+    {
+      path: '/login',
+      element: <Auth />
+    },
+    {
+      path: '/register',
+      element: <Auth />
+    },
+    {
+      path: '*',
+      element: <PageNotFound />
     }
   ])
 }
