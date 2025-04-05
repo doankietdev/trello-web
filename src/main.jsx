@@ -1,15 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
 import CssBaseline from '@mui/material/CssBaseline'
 import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles'
 import { ConfirmProvider } from 'material-ui-confirm'
-import { ToastContainer } from 'react-toastify'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import { Provider as ReduxProvider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
-import store from './redux/store.js'
-import App from './App.jsx'
-import theme from './theme.js'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
+import { PersistGate } from 'redux-persist/integration/react'
+import App from './App.jsx'
+import store, { persistor } from './redux/store.js'
+import theme from './theme.js'
 
 const confirmDefaultOptions = {
   dialogProps: {
@@ -42,11 +43,18 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ConfirmProvider defaultOptions={confirmDefaultOptions}>
         <CssBaseline />
         <ReduxProvider store={store}>
-          <Router>
-            <App />
-          </Router>
+          <PersistGate persistor={persistor}>
+            <Router
+              future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true
+              }}
+            >
+              <App />
+            </Router>
+          </PersistGate>
         </ReduxProvider>
-        <ToastContainer draggable theme="colored" position='bottom-right' />
+        <ToastContainer draggable theme="colored" position="bottom-right" />
       </ConfirmProvider>
     </CssVarsProvider>
   </React.StrictMode>

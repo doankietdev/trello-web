@@ -1,38 +1,37 @@
-import axios from 'axios'
-import { API_ROOT } from '~/configs/environment'
+import { authorizedAxiosInstance } from '~/utils/axios'
 
 export const createNewBoardAPI = async (board) => {
-  const response = await axios.post(`${API_ROOT}/v1/boards`, board)
+  const response = await authorizedAxiosInstance.post('/boards', board)
   return response.data?.metadata?.board
 }
 
 export const deleteBoardAPI = async (boardId) => {
-  const response = await axios.delete(`${API_ROOT}/v1/boards/${boardId}`)
+  const response = await authorizedAxiosInstance.delete(`/boards/${boardId}`)
   return response.data?.metadata?.board
 }
 
 export const fetchBoardsAPI = async () => {
-  const response = await axios.get(`${API_ROOT}/v1/boards`)
+  const response = await authorizedAxiosInstance.get('/boards')
   return response.data?.metadata?.boards
 }
 
 export const fetchBoardDetailsAPI = async (boardId) => {
-  const response = await axios.get(`${API_ROOT}/v1/boards/${boardId}`)
+  const response = await authorizedAxiosInstance.get(`/boards/${boardId}`)
   return response.data?.metadata?.board
 }
 
 export const updateBoardAPI = async (boardId, updateData) => {
-  const response = await axios.patch(`${API_ROOT}/v1/boards/${boardId}`, updateData)
+  const response = await authorizedAxiosInstance.patch(`/boards/${boardId}`, updateData)
   return response.data?.metadata?.board
 }
 
 export const createNewColumnAPI = async (column) => {
-  const response = await axios.post(`${API_ROOT}/v1/columns`, column)
+  const response = await authorizedAxiosInstance.post('/columns', column)
   return response.data?.metadata?.column
 }
 
 export const updateColumnAPI = async (columnId, updateData) => {
-  const response = await axios.patch(`${API_ROOT}/v1/columns/${columnId}`, updateData)
+  const response = await authorizedAxiosInstance.patch(`/columns/${columnId}`, updateData)
   return response.data?.metadata?.column
 }
 
@@ -43,7 +42,7 @@ export const moveCardToAnotherColumnAPI = async ({
   nextColumnId,
   cardOrderIdsOfNextColumn
 }) => {
-  const response = await axios.patch(`${API_ROOT}/v1/columns/move-card-to-another-column`, {
+  const response = await authorizedAxiosInstance.patch('/columns/move-card-to-another-column', {
     cardId,
     prevColumnId,
     cardOrderIdsOfPrevColumn,
@@ -54,16 +53,31 @@ export const moveCardToAnotherColumnAPI = async ({
 }
 
 export const deleteCardAPI = async (cardId) => {
-  const response = await axios.delete(`${API_ROOT}/v1/cards/${cardId}`)
+  const response = await authorizedAxiosInstance.delete(`/cards/${cardId}`)
   return response.data?.metadata
 }
 
 export const deleteColumnAPI = async (columnId) => {
-  const response = await axios.delete(`${API_ROOT}/v1/columns/${columnId}`)
+  const response = await authorizedAxiosInstance.delete(`/columns/${columnId}`)
   return response.data?.metadata
 }
 
 export const createNewCardAPI = async (card) => {
-  const response = await axios.post(`${API_ROOT}/v1/cards`, card)
+  const response = await authorizedAxiosInstance.post('/cards', card)
   return response.data?.metadata?.card
+}
+
+export const registerUserAPI = async (data) => {
+  const response = await authorizedAxiosInstance.post('/users/register', data)
+  return response.data?.metadata
+}
+
+export const verifyUserAPI = async (data) => {
+  const response = await authorizedAxiosInstance.post('/users/verify', data)
+  return response.data?.metadata
+}
+
+export const loginAPI = async (data) => {
+  const response = await authorizedAxiosInstance.post('/users/login', data)
+  return response.data?.metadata
 }

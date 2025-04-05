@@ -9,9 +9,14 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Zoom from '@mui/material/Zoom'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { loginAPI } from '~/apis'
 import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
 import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
+import { login } from '~/features/user/userThunk'
+import { dispatch } from '~/redux/store'
+import paths from '~/routes/paths'
 import {
   EMAIL_RULE,
   EMAIL_RULE_MESSAGE,
@@ -21,6 +26,10 @@ import {
 } from '~/utils/validators'
 
 function LoginForm() {
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const { registeredEmail, verifiedEmail } = Object.fromEntries([...searchParams])
+
   const {
     register,
     handleSubmit,
@@ -28,7 +37,12 @@ function LoginForm() {
   } = useForm()
 
   const submitLogIn = (data) => {
-    console.log('submit login:: ', data)
+    toast.promise(dispatch(login(data)).unwrap(), {
+      pending: 'Logging in...'
+    }).then((res) => {
+      console.log(res)
+      navigate(paths.boards())
+    })
   }
 
   return (
@@ -69,29 +83,33 @@ function LoginForm() {
               padding: '0 1em'
             }}
           >
-            <Alert severity="success" sx={{ '.MuiAlert-message': { overflow: 'hidden' } }}>
-              Your email&nbsp;
-              <Typography
-                variant="span"
-                sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}
-              >
-                trungquandev@gmail.com
-              </Typography>
-              &nbsp;has been verified.
-              <br />
-              Now you can login to enjoy our services! Have a good day!
-            </Alert>
-            <Alert severity="info" sx={{ '.MuiAlert-message': { overflow: 'hidden' } }}>
-              An email has been sent to&nbsp;
-              <Typography
-                variant="span"
-                sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}
-              >
-                trungquandev@gmail.com
-              </Typography>
-              <br />
-              Please check and verify your account before logging in!
-            </Alert>
+            {verifiedEmail && (
+              <Alert severity="success" sx={{ '.MuiAlert-message': { overflow: 'hidden' } }}>
+                Your email&nbsp;
+                <Typography
+                  variant="span"
+                  sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}
+                >
+                  {verifiedEmail}
+                </Typography>
+                &nbsp;has been verified.
+                <br />
+                Now you can login to enjoy our services! Have a good day!
+              </Alert>
+            )}
+            {registeredEmail && (
+              <Alert severity="info" sx={{ '.MuiAlert-message': { overflow: 'hidden' } }}>
+                An email has been sent to&nbsp;
+                <Typography
+                  variant="span"
+                  sx={{ fontWeight: 'bold', '&:hover': { color: '#fdba26' } }}
+                >
+                  {registeredEmail}
+                </Typography>
+                <br />
+                Please check and verify your account before logging in!
+              </Alert>
+            )}
           </Box>
           <Box sx={{ padding: '0 1em 1em 1em' }}>
             <Box sx={{ marginTop: '1em' }}>
@@ -132,7 +150,14 @@ function LoginForm() {
             </Box>
           </Box>
           <CardActions sx={{ padding: '0 1em 1em 1em' }}>
-            <Button type="submit" variant="contained" color="primary" size="large" fullWidth>
+            <Button
+              className="interceptor-loading"
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              fullWidth
+            >
               Login
             </Button>
           </CardActions>

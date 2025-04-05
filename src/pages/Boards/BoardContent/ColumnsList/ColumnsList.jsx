@@ -112,6 +112,7 @@ function ComlumnsList({ boardId, columns }) {
               }}
             />
             <Button
+              className="interceptor-loading"
               variant="contained"
               startIcon={<NoteAddIcon />}
               onClick={handleAddList}
@@ -119,7 +120,7 @@ function ComlumnsList({ boardId, columns }) {
                 px: 1.5
               }}
             >
-              Add list
+              Add
             </Button>
             <Button
               onClick={() => setOpenAddListForm(!isOpenAddListForm)}
@@ -155,6 +156,7 @@ function ComlumnsList({ boardId, columns }) {
             }}
           >
             <Button
+              className="interceptor-loading"
               startIcon={<NoteAddIcon />}
               variant="contained"
               sx={{

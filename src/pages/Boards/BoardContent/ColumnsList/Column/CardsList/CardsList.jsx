@@ -108,6 +108,7 @@ function CardsList({ newCardForm, cards, columnId, onAddCardSuccess = () => {} }
               }}
             />
             <Button
+              className="interceptor-loading"
               data-no-dnd
               variant="contained"
               startIcon={<NoteAddIcon />}
@@ -116,7 +117,7 @@ function CardsList({ newCardForm, cards, columnId, onAddCardSuccess = () => {} }
                 px: 1.5
               }}
             >
-              Add card
+              Add
             </Button>
             <Button
               data-no-dnd

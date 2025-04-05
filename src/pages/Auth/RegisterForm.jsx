@@ -8,9 +8,12 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import Zoom from '@mui/material/Zoom'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { registerUserAPI } from '~/apis'
 import { ReactComponent as TrelloIcon } from '~/assets/trello.svg'
 import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
+import paths from '~/routes/paths'
 import {
   EMAIL_RULE,
   EMAIL_RULE_MESSAGE,
@@ -27,9 +30,18 @@ function RegisterForm() {
     formState: { errors },
     watch
   } = useForm()
+  const navigate = useNavigate()
 
   const submitRegister = (data) => {
-    console.log('submit login:: ', data)
+    const { email, password } = data
+
+    toast
+      .promise(registerUserAPI({ email, password }), {
+        pending: 'Registration is in progress...'
+      })
+      .then(({ registeredEmail }) => {
+        navigate(paths.login({ registeredEmail }))
+      })
   }
 
   return (
@@ -119,7 +131,14 @@ function RegisterForm() {
             </Box>
           </Box>
           <CardActions sx={{ padding: '0 1em 1em 1em' }}>
-            <Button type="submit" variant="contained" color="primary" size="large" fullWidth>
+            <Button
+              className="interceptor-loading"
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+              fullWidth
+            >
               Register
             </Button>
           </CardActions>

@@ -189,6 +189,7 @@ function Column({ column }) {
             }}
           >
             <Button
+              className="interceptor-loading"
               data-no-dnd
               onClick={() => setOpenNewCardForm(true)}
               startIcon={<AddCardIcon />}

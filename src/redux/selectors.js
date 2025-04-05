@@ -5,3 +5,7 @@ export const currentBoardSelector = (state) => {
 export const boardsSelector = (state) => {
   return state.boards.boards
 }
+
+export const currentUserSelector = (state) => {
+  return state.user.currentUser
+}
